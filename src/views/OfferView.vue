@@ -1,5 +1,5 @@
 <script setup></script>
 
 <template>
-  <main>HomeView content</main>
+  <main>OfferView content</main>
 </template>

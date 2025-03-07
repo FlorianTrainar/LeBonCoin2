@@ -1,1 +1,23 @@
 @import './base.css';
+
+* {
+  box-sizing: border-box;
+}
+
+:root {
+  --orange-: #ec5a12;
+  --background-: #f4f9fe;
+}
+
+.wrapper {
+  width: 1050px;
+  margin: 0 auto;
+}
+
+button {
+  background-color: var(--orange-);
+  color: white;
+  border: none;
+  border-radius: 10px;
+  padding: 10px;
+}

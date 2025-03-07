@@ -1,10 +1,15 @@
 <script setup>
 import { RouterView } from 'vue-router'
+import HeaderPart from './components/HeaderPart.vue'
+import FooterPart from './components/FooterPart.vue'
 </script>
 
 <template>
-  <header><nav>Le Header</nav></header>
+  <HeaderPart />
+
   <RouterView />
+
+  <FooterPart />
 </template>
 
 <style scoped></style>

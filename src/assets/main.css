@@ -7,6 +7,7 @@
 :root {
   --orange-: #ec5a12;
   --background-: #f4f9fe;
+  --cover-background-: #fde9de;
 }
 
 .wrapper {
@@ -14,10 +15,23 @@
   margin: 0 auto;
 }
 
+h1 {
+  font-size: 30px;
+  font-weight: bold;
+  text-align: center;
+  margin: 15px 0;
+}
+
 button {
   background-color: var(--orange-);
   color: white;
+  font-weight: bold;
   border: none;
   border-radius: 10px;
   padding: 10px;
+  height: 100%;
+  align-self: center;
+}
+button:hover {
+  cursor: pointer;
 }

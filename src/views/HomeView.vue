@@ -10,7 +10,7 @@ let offersList = ref([])
 onMounted(async () => {
   try {
     const { data } = await axios.get(
-      'https://site--strapileboncoin--2m8zk47gvydr.code.run/api/offers?populate[0]=owner&populate[1]=pictures',
+      'https://site--strapileboncoin--2m8zk47gvydr.code.run/api/offers?populate[0]=owner.avatar&populate[1]=pictures',
     )
 
     offersList.value = data.data
@@ -50,7 +50,7 @@ onMounted(async () => {
       <sell-zone />
     </section>
     <OfferCard :offersList="offersList" />
-    {{ data }}
+    {{}}
   </main>
 </template>
 

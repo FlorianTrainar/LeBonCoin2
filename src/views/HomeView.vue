@@ -5,7 +5,7 @@ import { ref, onMounted } from 'vue'
 import SellZone from '../components/SellZone.vue'
 import OfferCard from '@/components/OfferCard.vue'
 
-let offersList = ref([])
+const offersList = ref({})
 
 onMounted(async () => {
   try {
@@ -13,7 +13,7 @@ onMounted(async () => {
       'https://site--strapileboncoin--2m8zk47gvydr.code.run/api/offers?populate[0]=owner.avatar&populate[1]=pictures',
     )
 
-    offersList.value = data.data
+    offersList.value = data
     console.log(offersList.value)
   } catch (error) {
     console.log('catch>>', error)
@@ -22,35 +22,43 @@ onMounted(async () => {
 </script>
 
 <template>
-  <main class="wrapper">
-    <section>
-      <form action="">
-        <div class="price">
-          <p>Prix</p>
-          <div>
-            <label><input type="text" placeholder="Minimum" />€</label>
-            <label><input type="text" placeholder="Maximum" />€</label>
+  <main>
+    <div class="wrapper">
+      <section>
+        <form action="">
+          <div class="price">
+            <p>Prix</p>
+            <div>
+              <label><input type="text" placeholder="Minimum" />€</label>
+              <label><input type="text" placeholder="Maximum" />€</label>
+            </div>
           </div>
-        </div>
-        <div>
-          <p for="">Tri</p>
           <div>
-            <label for="">Prix croissants</label>
-            <input type="radio" />
-            <label for="">Prix décroissants</label>
-            <input type="radio" />
-            <label for="">Pas de tri</label>
-            <input type="radio" />
+            <p for="">Tri</p>
+            <div>
+              <label for="">Prix croissants</label>
+              <input type="radio" />
+              <label for="">Prix décroissants</label>
+              <input type="radio" />
+              <label for="">Pas de tri</label>
+              <input type="radio" />
+            </div>
           </div>
-        </div>
 
-        <button>Rechercher</button>
-      </form>
+          <button>Rechercher</button>
+        </form>
 
-      <sell-zone />
-    </section>
-    <OfferCard :offersList="offersList" />
-    {{}}
+        <sell-zone />
+      </section>
+      <div class="offerCardZone">
+        <OfferCard
+          v-for="offer in offersList.data"
+          :key="offer.id"
+          :offerInfos="offer.attributes"
+          :id="offer.id"
+        />
+      </div>
+    </div>
   </main>
 </template>
 
@@ -64,7 +72,7 @@ form > div {
   display: flex;
   flex-direction: column;
   gap: 10px;
-  margin: 20px 0;
+  margin-bottom: 30px;
 }
 form > div > div {
   display: flex;
@@ -82,5 +90,10 @@ form p {
   padding: 10px;
   font-size: 16px;
   border: 1px grey solid;
+}
+.offerCardZone {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
 }
 </style>

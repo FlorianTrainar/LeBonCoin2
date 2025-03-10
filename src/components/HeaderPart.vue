@@ -54,9 +54,13 @@ import { RouterLink } from 'vue-router'
 <style scoped>
 header {
   border-bottom: 1px grey solid;
+  background-color: white;
+  position: fixed;
+  width: 100%;
+  height: var(--header-height-);
+  top: 0px;
 }
-.wrapper {
-}
+
 .topPart {
   display: flex;
   justify-content: space-between;

@@ -18,5 +18,6 @@
   align-items: center;
   border-radius: 20px;
   overflow: hidden;
+  margin-bottom: 30px;
 }
 </style>

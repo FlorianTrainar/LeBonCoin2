@@ -1,11 +1,21 @@
 <script setup>
 import axios from 'axios'
-import { onMounted, ref } from 'vue'
+import { onMounted, ref, computed } from 'vue'
+import { useCycleList } from '@vueuse/core'
 
 const offerInfo = ref(null)
 
 const props = defineProps({
   id: { required: true },
+})
+
+const cycleList = computed(() => {
+  if (offerInfo.value.attributes.pictures.data) {
+    const { state, next, prev } = useCycleList(offerInfo.value.attributes.pictures.data)
+    console.log(state)
+    return { state, next, prev }
+  }
+  return {}
 })
 
 onMounted(async () => {
@@ -27,9 +37,13 @@ onMounted(async () => {
     <div class="wrapper" v-else>
       <section class="topPart">
         <div class="productPicture">
-          <button><font-awesome-icon :icon="['fas', 'angle-left']" /></button>
-          <img :src="offerInfo.attributes.pictures.data[0].attributes.url" alt="photo" />
-          <button><font-awesome-icon :icon="['fas', 'angle-right']" /></button>
+          <button @click="cycleList.prev()">
+            <font-awesome-icon :icon="['fas', 'angle-left']" />
+          </button>
+          <img :src="cycleList.state.value.attributes.url" alt="photo" />
+          <button @click="cycleList.next()">
+            <font-awesome-icon :icon="['fas', 'angle-right']" />
+          </button>
         </div>
         <div class="ownerBlock">
           <div class="ownerInfo">
@@ -130,6 +144,7 @@ section {
 .buttonZone button {
   width: 100%;
   font-size: 16px;
+  padding: 13px;
 }
 .buttonZone button:last-of-type {
   background-color: var(--blue-);

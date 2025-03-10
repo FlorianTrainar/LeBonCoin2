@@ -1,50 +1,75 @@
 <script setup>
 import { RouterLink } from 'vue-router'
+import { computed } from 'vue'
 
 const props = defineProps({
-  offersList: Array,
+  offerInfos: {
+    type: Object,
+    required: true,
+  },
+  id: {
+    type: Number,
+    required: true,
+  },
+})
+
+const correctedPrice = computed(() => {
+  const price = props.offerInfos.price.toString()
+
+  let newPrice = ''
+
+  for (let i = price.length - 1; i >= 0; i--) {
+    if (newPrice.length === 3 || newPrice.length === 7) {
+      newPrice = price[i] + ' ' + newPrice
+    } else {
+      newPrice = price[i] + newPrice
+    }
+  }
+  return newPrice
 })
 </script>
 <template>
   <section>
-    <div v-for="offer in offersList" :key="offer.id">
-      <RouterLink :to="{ name: 'offer', params: { id: offer.id } }">
-        <div class="ownerZone">
-          <img
-            v-if="offer.attributes.owner.data.attributes.avatar.data"
-            :src="offer.attributes.owner.data.attributes.avatar.data.attributes.url"
-            alt=""
-          />
-          <h4>{{ offer.attributes.owner.data.attributes.username }}</h4>
-        </div>
-        <div class="offerZone">
-          <img
-            class="offerPicture"
-            :src="offer.attributes.pictures.data[0].attributes.url"
-            alt=""
-          />
-          <h3>{{ offer.attributes.title }}</h3>
-          <h3>{{ offer.attributes.price }} €</h3>
-          <div>
-            <p>{{ offer.attributes.publishedAt }}</p>
-            <font-awesome-icon :icon="['far', 'heart']" />
+    <RouterLink :to="{ name: 'offer', params: { id: id } }">
+      <div class="card">
+        <div>
+          <div class="ownerZone">
+            <img
+              v-if="offerInfos.owner.data.attributes.avatar.data"
+              :src="offerInfos.owner.data.attributes.avatar.data.attributes.url"
+              alt=""
+            />
+            <h4>{{ offerInfos.owner.data.attributes.username }}</h4>
+          </div>
+          <div class="offerZone">
+            <img :src="offerInfos.pictures.data[0].attributes.url" alt="" />
+            <h3>{{ offerInfos.title }}</h3>
+            <h3>{{ correctedPrice }} €</h3>
           </div>
         </div>
-      </RouterLink>
-    </div>
+        <div class="bottomZone">
+          <p>{{ offerInfos.publishedAt }}</p>
+          <font-awesome-icon :icon="['far', 'heart']" />
+        </div>
+      </div>
+    </RouterLink>
   </section>
 </template>
 <style scoped>
 section {
+  margin: 10px 0 30px 0;
+  width: 18%;
+  height: 370px;
+  border: solid 1px blues;
+}
+.card {
   display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
+  flex-direction: column;
   justify-content: space-between;
+  width: 100%;
+  height: 100%;
 }
-section > div {
-  width: 19%;
-  margin: 10px 0;
-}
+
 .ownerZone {
   display: flex;
   align-items: center;
@@ -54,15 +79,17 @@ section > div {
 .ownerZone img {
   border-radius: 50%;
   width: 28px;
+  object-fit: cover;
 }
 .offerZone {
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: 6px;
+  margin-bottom: 20px;
 }
 .offerZone img {
   width: 100%;
-  height: 230px;
+  height: 220px;
   border-radius: 20px;
   object-fit: cover;
 }
@@ -71,5 +98,15 @@ section > div {
   font-size: 12px;
   display: flex;
   justify-content: space-between;
+}
+
+.bottomZone {
+  display: flex;
+  justify-content: space-between;
+}
+p {
+  font-size: 14px;
+}
+h4 {
 }
 </style>

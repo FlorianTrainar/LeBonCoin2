@@ -1,6 +1,6 @@
 import './assets/main.css'
 
-import { createApp } from 'vue'
+import { createApp, ref } from 'vue'
 import App from './App.vue'
 import router from './router'
 
@@ -32,5 +32,13 @@ library.add(
 const app = createApp(App).component('font-awesome-icon', FontAwesomeIcon)
 
 app.use(router)
+
+const userInfo = ref({ username: '', token: '' })
+
+const changeUserInfo = (info) => {
+  userInfo.value = info
+}
+
+app.provide('GlobalStore', { userInfo: userInfo, changeUserInfo: changeUserInfo })
 
 app.mount('#app')

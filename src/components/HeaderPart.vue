@@ -1,5 +1,11 @@
 <script setup>
 import { RouterLink } from 'vue-router'
+import { inject } from 'vue'
+const Store = inject('GlobalStore')
+
+const disconnect = () => {
+  Store.changeUserInfo({ username: '', token: '' })
+}
 </script>
 <template>
   <header>
@@ -22,9 +28,18 @@ import { RouterLink } from 'vue-router'
           </button>
         </div>
 
-        <div>
+        <div v-if="!Store.userInfo.value.token">
+          <RouterLink :to="{ name: 'login' }">
+            <font-awesome-icon :icon="['far', 'user']" />
+            <button>se connecter</button>
+          </RouterLink>
+        </div>
+        <div v-if="Store.userInfo.value.token">
           <font-awesome-icon :icon="['far', 'user']" />
-          <p>se connecter</p>
+          <p>{{ Store.userInfo.value.username }}</p>
+          <RouterLink :to="{ name: 'home' }">
+            <p @click="disconnect">Icone de deconnexion</p>
+          </RouterLink>
         </div>
       </div>
       <div class="bottomPart">

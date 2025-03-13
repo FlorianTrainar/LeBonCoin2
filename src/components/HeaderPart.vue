@@ -1,6 +1,7 @@
 <script setup>
 import { RouterLink } from 'vue-router'
 import { inject } from 'vue'
+import AddButton from './AddButton.vue'
 const Store = inject('GlobalStore')
 
 const disconnect = () => {
@@ -17,28 +18,35 @@ const disconnect = () => {
             alt="logo"
           />
         </RouterLink>
-        <button>
+        <!-- <button>
           <font-awesome-icon :icon="['far', 'plus-square']" />
           Déposer une Annonce
-        </button>
-        <div>
-          <input type="text" placeholder="Rechercher sur leboncoin" />
-          <button>
-            <font-awesome-icon :icon="['fas', 'search']" />
-          </button>
-        </div>
+        </button> -->
+        <div class="centerBlock">
+          <AddButton />
 
-        <div v-if="!Store.userInfo.value.token">
+          <div id="searchInput">
+            <input type="text" placeholder="Rechercher sur leboncoin" />
+            <button>
+              <font-awesome-icon :icon="['fas', 'search']" />
+            </button>
+          </div>
+        </div>
+        <div id="logIn" v-if="!Store.userInfo.value.token">
           <RouterLink :to="{ name: 'login' }">
             <font-awesome-icon :icon="['far', 'user']" />
-            <button>se connecter</button>
+            <p>se connecter</p>
           </RouterLink>
         </div>
-        <div v-if="Store.userInfo.value.token">
-          <font-awesome-icon :icon="['far', 'user']" />
-          <p>{{ Store.userInfo.value.username }}</p>
+        <div id="logOut" v-if="Store.userInfo.value.token">
+          <div>
+            <font-awesome-icon :icon="['far', 'user']" />
+            <p>{{ Store.userInfo.value.username }}</p>
+          </div>
           <RouterLink :to="{ name: 'home' }">
-            <p @click="disconnect">Icone de deconnexion</p>
+            <p @click="disconnect">
+              <font-awesome-icon :icon="['fas', 'sign-out-alt']" />
+            </p>
           </RouterLink>
         </div>
       </div>
@@ -85,6 +93,31 @@ header {
 .topPart img {
   width: 150px;
 }
+.centerBlock {
+  display: flex;
+  gap: 20px;
+}
+#searchInput {
+  background-color: var(--background-);
+  padding: 5px;
+  border-radius: 10px;
+}
+#searchInput input {
+  border: none;
+  background: none;
+  font-size: 16px;
+  width: 230px;
+}
+#searchInput button {
+  color: black;
+  font-size: 13px;
+  width: 30px;
+  height: 30px;
+  border-radius: 6px;
+  text-align: center;
+  line-height: 8px;
+}
+
 .bottomPart {
   display: flex;
   justify-content: space-between;
@@ -94,5 +127,22 @@ header {
 .bottomPart svg {
   font-size: 2px;
   align-self: center;
+}
+#logIn a,
+#logOut div:first-child {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  /* border: 1px solid blue; */
+  font-size: 15px;
+}
+#logOut {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+#logOut > a {
+  color: grey;
 }
 </style>

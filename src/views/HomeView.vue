@@ -29,19 +29,19 @@ onMounted(async () => {
           <div class="price">
             <p>Prix</p>
             <div>
-              <label><input type="text" placeholder="Minimum" />€</label>
-              <label><input type="text" placeholder="Maximum" />€</label>
+              <label><input type="text" placeholder="Minimum" /><span>€</span></label>
+              <label><input type="text" placeholder="Maximum" /><span>€</span></label>
             </div>
           </div>
           <div>
             <p for="">Tri</p>
             <div>
-              <label for="">Prix croissants</label>
-              <input type="radio" />
-              <label for="">Prix décroissants</label>
-              <input type="radio" />
-              <label for="">Pas de tri</label>
-              <input type="radio" />
+              <label for="croissant">Prix croissants</label>
+              <input type="radio" id="croissant" value="croissant" v-model="tri" />
+              <label for="décroissant">Prix décroissants</label>
+              <input type="radio" id="décroissant" value="décroissant" v-model="tri" />
+              <label for="none">Pas de tri</label>
+              <input type="radio" id="none" value="none" v-model="tri" />
             </div>
           </div>
 
@@ -86,10 +86,19 @@ form p {
   font-weight: bold;
 }
 .price label {
-  border-radius: 15px;
-  padding: 10px;
+  border-radius: 12px;
   font-size: 16px;
-  border: 1px grey solid;
+  border: 1px var(--grey-border-) solid;
+  padding-left: 8px;
+}
+.price input {
+  border-right: 1px solid var(--grey-border-);
+  padding: 10px;
+  font-size: 15px;
+  width: 165px;
+}
+.price span {
+  margin: 0px 10px;
 }
 .offerCardZone {
   display: flex;

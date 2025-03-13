@@ -12,6 +12,16 @@ const password = ref('')
 const errorMessage = ref('')
 const isSubmitting = ref(false)
 
+const visible = ref(false)
+
+const toggleVisibility = () => {
+  if (visible.value) {
+    visible.value = false
+  } else {
+    visible.value = true
+  }
+}
+
 const handleSubmit = async () => {
   try {
     isSubmitting.value = true
@@ -45,13 +55,26 @@ const handleSubmit = async () => {
         <p>Connectez-vous pour découvrir toutes nos fonctionnalités</p>
         <form @submit.prevent="handleSubmit">
           <label for="username">Nom</label>
-          <input type="text" id="username" v-model="username" />
+          <div>
+            <input type="text" id="username" v-model="username" @:input="errorMessage = ''" />
+          </div>
           <label for="email">E-mail</label>
-          <input type="text" id="email" v-model="email" />
+          <div>
+            <input type="text" id="email" v-model="email" @:input="errorMessage = ''" />
+          </div>
           <label for="password">Mot de passe</label>
-          <input type="text" id="password" v-model="password" />
+          <div v-if="visible" class="password">
+            <input type="text" id="password" v-model="password" @:input="errorMessage = ''" />
+
+            <font-awesome-icon @click="toggleVisibility" :icon="['fas', 'eye']" />
+          </div>
+          <div v-if="!visible" class="password">
+            <input type="password" id="password" v-model="password" @:input="errorMessage = ''" />
+            <font-awesome-icon @click="toggleVisibility" :icon="['fas', 'eye-slash']" />
+          </div>
+
           <button v-if="!isSubmitting">S'inscrire</button>
-          <p v-if="isSubmitting">Inscription en cours</p>
+          <p v-else>Inscription en cours</p>
         </form>
         <p v-if="errorMessage">{{ errorMessage }}</p>
         <p>
@@ -70,15 +93,51 @@ section {
   display: flex;
   flex-direction: column;
   align-items: center;
+  gap: 10px;
   box-shadow: 0 0 5px grey;
-  width: 400px;
+  width: 430px;
   margin: 10px auto;
-  padding: 20px 0;
+  padding: 25px;
+  border-radius: 20px;
+}
+section h2,
+section > p:first-of-type {
+  align-self: flex-start;
 }
 form {
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 10px;
+  margin: 20px;
+}
+form div {
+  border: grey solid 1px;
+  width: 300px;
+  height: 35px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+input {
+  border: none;
+  border-radius: 10px;
+  width: 100%;
+  height: 100%;
+}
+.password svg {
+  color: grey;
+  margin: 0 auto;
+}
+.password svg:hover {
+  cursor: pointer;
+}
+.password input {
+  border-right: grey solid 1px;
+  width: 85%;
+  border-radius: 10px 0 0 10px;
+  display: flex;
+  align-items: center;
 }
 </style>

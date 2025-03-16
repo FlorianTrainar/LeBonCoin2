@@ -3,6 +3,7 @@ import './assets/main.css'
 import { createApp, ref } from 'vue'
 import App from './App.vue'
 import router from './router'
+import VueCookies from 'vue-cookies'
 
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
@@ -38,8 +39,9 @@ library.add(
 const app = createApp(App).component('font-awesome-icon', FontAwesomeIcon)
 
 app.use(router)
+app.use(VueCookies)
 
-const userInfo = ref({ username: '', token: '' })
+const userInfo = ref($cookies.get('userInfo') || { username: '', token: '' })
 
 const changeUserInfo = (info) => {
   userInfo.value = info

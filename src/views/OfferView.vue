@@ -40,7 +40,15 @@ onMounted(async () => {
           <button @click="cycleList.prev()">
             <font-awesome-icon :icon="['fas', 'angle-left']" />
           </button>
-          <img :src="cycleList.state.value.attributes.url" alt="photo" />
+          <img
+            v-if="offerInfo.attributes.pictures.data"
+            :src="cycleList.state.value.attributes.url"
+            alt="photo"
+          />
+          <img
+            v-else
+            src="../assets/img/depositphotos_247872612-stock-illustration-no-image-available-icon-vector.jpg"
+          />
           <button @click="cycleList.next()">
             <font-awesome-icon :icon="['fas', 'angle-right']" />
           </button>
@@ -53,6 +61,7 @@ onMounted(async () => {
                 :src="offerInfo.attributes.owner.data.attributes.avatar.data.attributes.url"
                 alt=""
               />
+
               <h3>{{ offerInfo.attributes.owner.data.attributes.username }}</h3>
             </div>
             <div v-if="offerInfo.attributes.owner.data.attributes.confirmed">

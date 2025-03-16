@@ -31,10 +31,16 @@ const handleSubmit = async () => {
         { email: email.value, username: username.value, password: password.value },
       )
       console.log(data)
-      Store.changeUserInfo({
+
+      const userInfo = {
         username: data.user.username,
         token: data.jwt,
-      })
+      }
+
+      Store.changeUserInfo(userInfo)
+
+      $cookies.set('userInfo', userInfo)
+
       router.push({ name: 'home' })
     } else {
       errorMessage.value = 'Merci de remplir tous les champs'

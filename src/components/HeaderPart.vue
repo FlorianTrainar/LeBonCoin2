@@ -1,11 +1,30 @@
 <script setup>
 import { RouterLink } from 'vue-router'
-import { inject } from 'vue'
+import { inject, ref } from 'vue'
+import { useRouter, useRoute } from 'vue-router'
+
 import AddButton from './AddButton.vue'
+
+const router = useRouter()
+const route = useRoute()
+
 const Store = inject('GlobalStore')
+
+const searchInput = ref('')
+
+const handleSearch = () => {
+  const queries = { ...route.query }
+  if (searchInput.value) {
+    queries.title = searchInput.value
+  } else {
+    delete queries.title
+  }
+  router.push({ name: 'home', query: queries })
+}
 
 const disconnect = () => {
   Store.changeUserInfo({ username: '', token: '' })
+  $cookies.remove('userInfo')
 }
 </script>
 <template>
@@ -18,19 +37,16 @@ const disconnect = () => {
             alt="logo"
           />
         </RouterLink>
-        <!-- <button>
-          <font-awesome-icon :icon="['far', 'plus-square']" />
-          Déposer une Annonce
-        </button> -->
+
         <div class="centerBlock">
           <AddButton />
 
-          <div id="searchInput">
-            <input type="text" placeholder="Rechercher sur leboncoin" />
+          <form @submit.prevent="handleSearch" id="searchInput">
+            <input type="text" placeholder="Rechercher sur leboncoin" v-model="searchInput" />
             <button>
               <font-awesome-icon :icon="['fas', 'search']" />
             </button>
-          </div>
+          </form>
         </div>
         <div id="logIn" v-if="!Store.userInfo.value.token">
           <RouterLink :to="{ name: 'login' }">

@@ -42,7 +42,15 @@ const correctedPrice = computed(() => {
             <h4>{{ offerInfos.owner.data.attributes.username }}</h4>
           </div>
           <div class="offerZone">
-            <img :src="offerInfos.pictures.data[0].attributes.url" alt="" />
+            <img
+              v-if="offerInfos.pictures.data"
+              :src="offerInfos.pictures.data[0].attributes.url"
+              alt=""
+            />
+            <img
+              v-else
+              src="../assets/img/depositphotos_247872612-stock-illustration-no-image-available-icon-vector.jpg"
+            />
             <h3>{{ offerInfos.title }}</h3>
             <h3>{{ correctedPrice }} €</h3>
           </div>

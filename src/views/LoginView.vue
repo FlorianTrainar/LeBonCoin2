@@ -30,10 +30,12 @@ const handleSubmit = async () => {
         { identifier: email.value, password: password.value },
       )
       console.log(data)
-      Store.changeUserInfo({
-        username: data.user.username,
-        token: data.jwt,
-      })
+
+      const userInfo = { username: data.user.username, token: data.jwt }
+      Store.changeUserInfo(userInfo)
+
+      $cookies.set('userInfo', userInfo)
+
       router.push({ name: 'home' })
     } else {
       errorMessage.value = 'Veuillez remplir tous les champs'

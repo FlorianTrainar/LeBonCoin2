@@ -2,6 +2,9 @@ import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
 import SignupView from '@/views/SignupView.vue'
 import LoginView from '@/views/LoginView.vue'
+import PublishView from '@/views/PublishView.vue'
+import { inject } from 'vue'
+
 // import OfferView from '@/views/OfferView.vue'
 
 const router = createRouter({
@@ -35,10 +38,22 @@ const router = createRouter({
       name: 'login',
       component: LoginView,
     },
+    {
+      path: '/publish',
+      name: 'publish',
+      component: PublishView,
+      meta: { requireAuth: true },
+    },
   ],
   scrollBehavior() {
     return { top: 0, left: 0 }
   },
+})
+router.beforeEach((to, from) => {
+  const GlobalStore = inject('GlobalStore')
+  if (to.meta.requireAuth && !GlobalStore.userInfo.value.token) {
+    return { name: 'login', query: { redirect: to.name } }
+  }
 })
 
 export default router

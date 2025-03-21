@@ -25,6 +25,7 @@ const handleSearch = () => {
 const disconnect = () => {
   Store.changeUserInfo({ username: '', token: '' })
   $cookies.remove('userInfo')
+  $cookies.remove('userId')
 }
 </script>
 <template>

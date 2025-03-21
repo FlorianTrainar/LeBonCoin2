@@ -1,8 +1,10 @@
 <script setup>
 import axios from 'axios'
 import { inject, ref } from 'vue'
-import { useRouter } from 'vue-router'
+import { useRouter, useRoute } from 'vue-router'
+
 const router = useRouter()
+const route = useRoute
 
 const Store = inject('GlobalStore')
 
@@ -32,11 +34,14 @@ const handleSubmit = async () => {
       console.log(data)
 
       const userInfo = { username: data.user.username, token: data.jwt }
-      Store.changeUserInfo(userInfo)
+      const userId = data.user.id
+      Store.changeUserInfo(userInfo, userId)
 
       $cookies.set('userInfo', userInfo)
+      $cookies.set('userId', userId)
 
-      router.push({ name: 'home' })
+      router.push({ name: route.query.redirect || 'home' })
+      console.log(route.query.redirect)
     } else {
       errorMessage.value = 'Veuillez remplir tous les champs'
     }

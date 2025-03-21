@@ -7,13 +7,7 @@ import SellZone from '../components/SellZone.vue'
 import OfferCard from '@/components/OfferCard.vue'
 import PaginationPart from '@/components/PaginationPart.vue'
 
-const props = defineProps({
-  page: Number,
-  title: String,
-  pricemin: Number,
-  pricemax: Number,
-  sort: Number,
-})
+const props = defineProps(['page', 'title', 'pricemin', 'pricemax', 'sort'])
 
 const offersList = ref([])
 const pagination = ref('')

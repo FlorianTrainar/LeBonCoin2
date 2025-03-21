@@ -4,12 +4,8 @@ import { useRoute, useRouter } from 'vue-router'
 const route = useRoute()
 const router = useRouter()
 
-const props = defineProps({
-  sort: Number,
-  pricemin: Number,
-  pricemax: Number,
-})
-const sortRequested = ref('')
+const props = defineProps(['sort', 'pricemin', 'pricemax'])
+const sortRequested = ref(0)
 const priceminRequested = ref(props.pricemin)
 const pricemaxRequested = ref(props.pricemax)
 

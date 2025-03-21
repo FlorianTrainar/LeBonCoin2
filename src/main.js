@@ -42,11 +42,13 @@ app.use(router)
 app.use(VueCookies)
 
 const userInfo = ref($cookies.get('userInfo') || { username: '', token: '' })
+const userId = ref(parseInt($cookies.get('userId')) || null)
 
-const changeUserInfo = (info) => {
+const changeUserInfo = (info, id) => {
   userInfo.value = info
+  userId.value = id
 }
 
-app.provide('GlobalStore', { userInfo: userInfo, changeUserInfo: changeUserInfo })
+app.provide('GlobalStore', { userInfo: userInfo, userId: userId, changeUserInfo: changeUserInfo })
 
 app.mount('#app')

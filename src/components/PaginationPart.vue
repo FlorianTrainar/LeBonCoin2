@@ -2,9 +2,7 @@
 import { useRouter, useRoute } from 'vue-router'
 import { ref } from 'vue'
 
-const props = defineProps({
-  pagination: Number,
-})
+const props = defineProps(['pagination'])
 
 const router = useRouter()
 const route = useRoute()

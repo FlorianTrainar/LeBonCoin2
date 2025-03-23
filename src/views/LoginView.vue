@@ -4,7 +4,7 @@ import { inject, ref } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 
 const router = useRouter()
-const route = useRoute
+const route = useRoute()
 
 const Store = inject('GlobalStore')
 
@@ -55,16 +55,16 @@ const handleSubmit = async () => {
 <template>
   <main>
     <div class="wrapper">
-      <section>
+      <section class="formSection">
         <h2>Bonjour !</h2>
         <p>Connectez-vous pour découvrir toutes nos fonctionnalités.</p>
         <form @submit.prevent="handleSubmit">
-          <label for="email">E-mail</label>
+          <label for="email">E-mail *</label>
           <div>
             <input type="text" id="email" v-model="email" @:input="errorMessage = ''" />
           </div>
 
-          <label for="password">Mot de passe</label>
+          <label for="password">Mot de passe *</label>
           <div v-if="visible" class="password">
             <input type="text" id="password" v-model="password" @:input="errorMessage = ''" />
             <font-awesome-icon @click="toggleVisibility" :icon="['fas', 'eye']" />
@@ -74,32 +74,26 @@ const handleSubmit = async () => {
             <font-awesome-icon @click="toggleVisibility" :icon="['fas', 'eye-slash']" />
           </div>
 
-          <button v-if="!isSubmitting">Se connecter fleche</button>
+          <button v-if="!isSubmitting">
+            Se connecter<font-awesome-icon :icon="['fas', 'arrow-right']" />
+          </button>
           <button type="button" v-else>Connexion en cours</button>
 
           <p v-if="errorMessage">{{ errorMessage }}</p>
         </form>
-        <p>Pas de compte ? <RouterLink :to="{ name: 'signup' }">Créez en un</RouterLink></p>
+        <p>
+          Envie de nous rejoindre ?
+          <span><RouterLink :to="{ name: 'signup' }">Créez un compte</RouterLink></span>
+        </p>
       </section>
-      <section>
+      <!-- <section>
         <p>test : {{ Store.userInfo.value }}</p>
         <p>Envoi : {{}}</p>
-      </section>
+      </section> -->
     </div>
   </main>
 </template>
 <style scoped>
-section {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 10px;
-  box-shadow: 0 0 5px grey;
-  width: 430px;
-  margin: 10px auto;
-  padding: 25px;
-  border-radius: 20px;
-}
 section h2,
 section > p:first-of-type {
   align-self: flex-start;
@@ -110,22 +104,18 @@ form {
   align-items: center;
   gap: 10px;
   margin: 20px;
+  width: 100%;
 }
 form div {
   border: grey solid 1px;
-  width: 300px;
-  height: 35px;
+  width: 100%;
+  height: 40px;
   border-radius: 10px;
   display: flex;
   align-items: center;
   justify-content: space-between;
 }
-input {
-  border: none;
-  border-radius: 10px;
-  width: 100%;
-  height: 100%;
-}
+
 .password svg {
   color: grey;
   margin: 0 auto;
@@ -139,5 +129,17 @@ input {
   border-radius: 10px 0 0 10px;
   display: flex;
   align-items: center;
+}
+button {
+  width: 100%;
+  height: 40px;
+  margin-top: 20px;
+}
+button svg {
+  margin-left: 10px;
+}
+span {
+  font-weight: bold;
+  text-decoration: underline;
 }
 </style>

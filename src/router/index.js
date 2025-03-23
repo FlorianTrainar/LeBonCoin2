@@ -4,6 +4,7 @@ import SignupView from '@/views/SignupView.vue'
 import LoginView from '@/views/LoginView.vue'
 import PublishView from '@/views/PublishView.vue'
 import { inject } from 'vue'
+import PaymentView from '@/views/PaymentView.vue'
 
 // import OfferView from '@/views/OfferView.vue'
 
@@ -28,6 +29,13 @@ const router = createRouter({
       component: () => import('../views/OfferView.vue'),
       props: true,
     },
+    {
+      path: '/payment/:id',
+      name: 'payment',
+      component: PaymentView,
+      props: true,
+    },
+
     {
       path: '/signup',
       name: 'signup',

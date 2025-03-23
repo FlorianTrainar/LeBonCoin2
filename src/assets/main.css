@@ -65,3 +65,24 @@ input:focus {
   outline: none;
   /* background-color: none; */
 }
+
+.formSection {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  box-shadow: 0 0 5px grey;
+  width: 430px;
+  margin: 10px auto;
+  padding: 25px;
+  border-radius: 20px;
+}
+.formSection label {
+  align-self: flex-start;
+}
+.formSection input {
+  border: none;
+  border-radius: 10px;
+  width: 100%;
+  height: 100%;
+}

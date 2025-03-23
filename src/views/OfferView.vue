@@ -1,5 +1,6 @@
 <script setup>
 import axios from 'axios'
+import { RouterLink } from 'vue-router'
 import { onMounted, ref, computed } from 'vue'
 import { useCycleList } from '@vueuse/core'
 
@@ -28,6 +29,11 @@ onMounted(async () => {
   } catch (error) {
     console.log('catch>>', error)
   }
+})
+
+const correctedDate = computed(() => {
+  let date = offerInfo.value.attributes.publishedAt.slice(0, 10).replaceAll('-', '/')
+  return date.split('/').reverse().join('/')
 })
 </script>
 
@@ -70,14 +76,19 @@ onMounted(async () => {
             <div v-else>La pièce d'identité n'est pas vérifiée</div>
             <div><font-awesome-icon :icon="['far', 'clock']" /> Répond généralement en 1 heure</div>
           </div>
-          <div class="buttonZone"><button>Acheter</button> <button>Message</button></div>
+          <div class="buttonZone">
+            <RouterLink :to="{ name: 'payment', params: { id: offerInfo.id } }">
+              <button>Acheter</button>
+            </RouterLink>
+            <button>Message</button>
+          </div>
         </div>
       </section>
       <section class="bottomPart">
         <h2>{{ offerInfo.attributes.title }}</h2>
         <div>
           <h3>{{ offerInfo.attributes.price }} €</h3>
-          <p>{{ offerInfo.attributes.publishedAt }}</p>
+          <p>{{ correctedDate }}</p>
         </div>
         <div>
           <h3>Description</h3>
@@ -147,15 +158,18 @@ section {
   flex-direction: column;
   border-top: var(--grey-border-) solid 1px;
   padding-top: 12px;
-  align-items: flex-end;
+  align-items: center;
   gap: 10px;
+}
+.buttonZone a {
+  width: 100%;
 }
 .buttonZone button {
   width: 100%;
   font-size: 16px;
   padding: 13px;
 }
-.buttonZone button:last-of-type {
+.buttonZone > button:last-of-type {
   background-color: var(--blue-);
 }
 

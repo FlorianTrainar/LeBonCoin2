@@ -10,9 +10,12 @@ const title = ref('')
 const description = ref('')
 const price = ref(null)
 const pictures = ref(null)
+
 const errorMessage = ref('')
+const isSubmitting = ref(false)
 
 const handleSubmit = async () => {
+  isSubmitting.value = true
   if (!title.value || !description.value || !price.value || !pictures.value) {
     errorMessage.value = 'Veuillez remplir tous les champs'
   } else {
@@ -49,6 +52,7 @@ const handleSubmit = async () => {
       console.log(error)
     }
   }
+  isSubmitting.value = false
 }
 
 const selectPictures = (event) => {
@@ -69,6 +73,14 @@ const imagePreview = computed(() => {
     }
   }
   return tab
+})
+
+const buttonText = computed(() => {
+  if (isSubmitting.value) {
+    return 'Envoi en cours'
+  } else {
+    return 'Déposer mon annonce'
+  }
 })
 
 const clearErrorMessage = () => {
@@ -113,9 +125,17 @@ const clearErrorMessage = () => {
           </div>
         </div>
         <div class="pictures">
-          <label for="pictures">Ajoutez des photos</label>
+          <label for="pictures"
+            >Ajoutez des photos
+            <div class="pictureSelector">
+              <font-awesome-icon :icon="['fas', 'camera']" />
+              <p>Sélectionnez jusqu'à 10 photos</p>
+            </div>
+          </label>
+
           <input type="file" id="pictures" multiple @input="selectPictures" />
-          <div>
+
+          <div class="pictureDisplay">
             <div v-for="picture in imagePreview" :key="picture">
               <img :src="picture" />
             </div>
@@ -123,12 +143,12 @@ const clearErrorMessage = () => {
         </div>
         <div class="error" v-if="errorMessage">{{ errorMessage }}</div>
 
-        <button>Déposer mon annonce</button>
+        <button :disabled="isSubmitting">{{ buttonText }}</button>
       </form>
-      <p>Title : {{ title }} /// Description : {{ description }} // Price :{{ price }}</p>
+      <!-- <p>Title : {{ title }} /// Description : {{ description }} // Price :{{ price }}</p>
       <p>Token : {{ GlobalStore.userInfo.value.token }}</p>
       <p>User : {{ GlobalStore.userId.value }}</p>
-      <p>type : {{ typeof GlobalStore.userId.value }}</p>
+      <p>type : {{ typeof GlobalStore.userId.value }}</p> -->
     </div>
   </main>
 </template>
@@ -140,7 +160,7 @@ form {
   margin: 30px 0;
   width: 100%;
 }
-div {
+form div {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -185,7 +205,32 @@ textarea {
   padding: 0 10px;
   width: 40px;
 }
-.pictures > div {
+.pictureSelector {
+  border: 1px solid grey;
+  border-radius: 12px;
+  width: 150px;
+  height: 150px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  margin-top: 4px;
+}
+.pictureSelector {
+  cursor: pointer;
+}
+.pictureSelector p {
+  color: var(--blue-);
+  text-align: center;
+  font-size: 18px;
+  width: 90%;
+}
+.pictureSelector svg {
+  color: var(--blue-);
+  font-size: 50px;
+}
+.pictureDisplay {
   display: flex;
   flex-direction: row;
   width: 70%;
@@ -195,6 +240,10 @@ textarea {
   width: 120px;
   height: 120px;
   object-fit: contain;
+}
+
+input[type='file'] {
+  display: none;
 }
 .error {
   color: red;

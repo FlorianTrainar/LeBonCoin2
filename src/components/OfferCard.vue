@@ -27,6 +27,11 @@ const correctedPrice = computed(() => {
   }
   return newPrice
 })
+
+const correctedDate = computed(() => {
+  let date = props.offerInfos.publishedAt.slice(0, 10).replaceAll('-', '/')
+  return date.split('/').reverse().join('/')
+})
 </script>
 <template>
   <section>
@@ -56,7 +61,7 @@ const correctedPrice = computed(() => {
           </div>
         </div>
         <div class="bottomZone">
-          <p>{{ offerInfos.publishedAt }}</p>
+          <p>{{ correctedDate }}</p>
           <font-awesome-icon :icon="['far', 'heart']" />
         </div>
       </div>

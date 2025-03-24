@@ -69,13 +69,10 @@ input:focus {
 .formSection {
   display: flex;
   flex-direction: column;
-  align-items: center;
   gap: 10px;
   box-shadow: 0 0 5px grey;
-  width: 430px;
-  margin: 10px auto;
-  padding: 25px;
   border-radius: 20px;
+  padding: 25px;
 }
 .formSection label {
   align-self: flex-start;
@@ -85,4 +82,13 @@ input:focus {
   border-radius: 10px;
   width: 100%;
   height: 100%;
+}
+.inputField {
+  border: grey solid 1px;
+  width: 100%;
+  height: 40px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }

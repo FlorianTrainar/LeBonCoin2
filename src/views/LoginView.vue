@@ -23,14 +23,43 @@ const toggleVisibility = () => {
   }
 }
 
+// const handleSubmit = async () => {
+//   try {
+//     isSubmitting.value = true
+//     if (email.value && password.value) {
+//       const { data } = await axios.post(
+//         'https://site--strapileboncoin--2m8zk47gvydr.code.run/api/auth/local',
+//         { identifier: email.value, password: password.value },
+//       )
+//       console.log(data)
+
+//       const userInfo = { username: data.user.username, token: data.jwt }
+//       const userId = data.user.id
+//       Store.changeUserInfo(userInfo, userId)
+
+//       $cookies.set('userInfo', userInfo)
+//       $cookies.set('userId', userId)
+
+//       router.push({ name: route.query.redirect || 'home' })
+//       console.log(route.query.redirect)
+//     } else {
+//       errorMessage.value = 'Veuillez remplir tous les champs'
+//     }
+//   } catch (error) {
+//     console.log(error.response.data.error)
+//     errorMessage.value = 'Un problème est survenu'
+//   }
+//   isSubmitting.value = false
+// }
+
 const handleSubmit = async () => {
   try {
     isSubmitting.value = true
     if (email.value && password.value) {
-      const { data } = await axios.post(
-        'https://site--strapileboncoin--2m8zk47gvydr.code.run/api/auth/local',
-        { identifier: email.value, password: password.value },
-      )
+      const { data } = await axios.post('http://localhost:1337/api/auth/local', {
+        identifier: email.value,
+        password: password.value,
+      })
       console.log(data)
 
       const userInfo = { username: data.user.username, token: data.jwt }
@@ -60,16 +89,16 @@ const handleSubmit = async () => {
         <p>Connectez-vous pour découvrir toutes nos fonctionnalités.</p>
         <form @submit.prevent="handleSubmit">
           <label for="email">E-mail *</label>
-          <div>
+          <div class="inputField">
             <input type="text" id="email" v-model="email" @:input="errorMessage = ''" />
           </div>
 
           <label for="password">Mot de passe *</label>
-          <div v-if="visible" class="password">
+          <div v-if="visible" class="inputField password">
             <input type="text" id="password" v-model="password" @:input="errorMessage = ''" />
             <font-awesome-icon @click="toggleVisibility" :icon="['fas', 'eye']" />
           </div>
-          <div v-if="!visible" class="password">
+          <div v-if="!visible" class="inputField password">
             <input type="password" id="password" v-model="password" @:input="errorMessage = ''" />
             <font-awesome-icon @click="toggleVisibility" :icon="['fas', 'eye-slash']" />
           </div>
@@ -106,14 +135,10 @@ form {
   margin: 20px;
   width: 100%;
 }
-form div {
-  border: grey solid 1px;
-  width: 100%;
-  height: 40px;
-  border-radius: 10px;
-  display: flex;
+.formSection {
+  width: 430px;
+  margin: 10px auto;
   align-items: center;
-  justify-content: space-between;
 }
 
 .password svg {

@@ -12,6 +12,32 @@ const props = defineProps(['page', 'title', 'pricemin', 'pricemax', 'sort'])
 const offersList = ref([])
 const pagination = ref('')
 
+// Version test :
+
+// onMounted(async () => {
+//   watchEffect(async () => {
+//     try {
+//       let pricefilters = ''
+//       if (props.pricemax) {
+//         pricefilters += `&filters[price][$lte]=${props.pricemax}`
+//       }
+//       if (props.pricemin) {
+//         pricefilters += `&filters[price][$gte]=${props.pricemin}`
+//       }
+//       const { data } = await axios.get(
+//         `https://site--strapileboncoin--2m8zk47gvydr.code.run/api/offers?populate[0]=owner.avatar&populate[1]=pictures&pagination[page]=${props.page}&pagination[pageSize]=10&sort=${props.sort}${pricefilters}&filters[title][$containsi]=${props.title}`,
+//       )
+
+//       offersList.value = data
+//       pagination.value = data.meta.pagination
+
+//       console.log(offersList.value)
+//     } catch (error) {
+//       console.log('catch>>', error)
+//     }
+//   })
+// })
+
 onMounted(async () => {
   watchEffect(async () => {
     try {
@@ -23,7 +49,7 @@ onMounted(async () => {
         pricefilters += `&filters[price][$gte]=${props.pricemin}`
       }
       const { data } = await axios.get(
-        `https://site--strapileboncoin--2m8zk47gvydr.code.run/api/offers?populate[0]=owner.avatar&populate[1]=pictures&pagination[page]=${props.page}&pagination[pageSize]=10&sort=${props.sort}${pricefilters}&filters[title][$containsi]=${props.title}`,
+        `http://localhost:1337/api/offers?populate[0]=owner.avatar&populate[1]=pictures&pagination[page]=${props.page}&pagination[pageSize]=10&sort=${props.sort}${pricefilters}&filters[title][$containsi]=${props.title}`,
       )
 
       offersList.value = data

@@ -29,12 +29,6 @@ const router = createRouter({
       component: () => import('../views/OfferView.vue'),
       props: true,
     },
-    {
-      path: '/payment/:id',
-      name: 'payment',
-      component: PaymentView,
-      props: true,
-    },
 
     {
       path: '/signup',
@@ -52,6 +46,13 @@ const router = createRouter({
       component: PublishView,
       meta: { requireAuth: true },
     },
+    {
+      path: '/payment/:id',
+      name: 'payment',
+      component: PaymentView,
+      meta: { requireAuth: true },
+      props: true,
+    },
   ],
   scrollBehavior() {
     return { top: 0, left: 0 }
@@ -60,7 +61,7 @@ const router = createRouter({
 router.beforeEach((to, from) => {
   const GlobalStore = inject('GlobalStore')
   if (to.meta.requireAuth && !GlobalStore.userInfo.value.token) {
-    return { name: 'login', query: { redirect: to.name } }
+    return { name: 'login', query: { redirect: to.path }, params: to.params }
   }
 })
 

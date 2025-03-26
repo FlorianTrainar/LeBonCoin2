@@ -133,6 +133,8 @@ section {
 }
 .productPicture img {
   height: 380px;
+  max-width: 500px;
+  object-fit: cover;
 }
 .productPicture button {
   color: black;

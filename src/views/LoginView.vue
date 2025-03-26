@@ -69,7 +69,7 @@ const handleSubmit = async () => {
       $cookies.set('userInfo', userInfo)
       $cookies.set('userId', userId)
 
-      router.push({ name: route.query.redirect || 'home' })
+      router.push({ path: route.query.redirect || '/' })
       console.log(route.query.redirect)
     } else {
       errorMessage.value = 'Veuillez remplir tous les champs'

@@ -33,6 +33,7 @@ h1 {
 h2 {
   font-size: 25px;
   font-weight: bold;
+  margin-bottom: 10px;
 }
 h3 {
   font-weight: bold;
@@ -41,6 +42,10 @@ h3 {
 h4 {
   font-weight: bold;
   font-size: 15px;
+}
+.errorText {
+  font-weight: bold;
+  color: red;
 }
 a {
   text-decoration: none;
@@ -77,7 +82,9 @@ input:focus {
 .formSection label {
   align-self: flex-start;
 }
-.formSection input {
+.formSection input[type='text'],
+.formSection input[type='number'],
+.formSection input[type='password'] {
   border: none;
   border-radius: 10px;
   width: 100%;

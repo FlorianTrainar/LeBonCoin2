@@ -14,47 +14,6 @@ const pictures = ref(null)
 const errorMessage = ref('')
 const isSubmitting = ref(false)
 
-// const handleSubmit = async () => {
-//   isSubmitting.value = true
-//   if (!title.value || !description.value || !price.value || !pictures.value) {
-//     errorMessage.value = 'Veuillez remplir tous les champs'
-//   } else {
-//     const formData = new FormData()
-//     for (const key in pictures.value) {
-//       if (Object.hasOwnProperty.call(pictures.value, key)) {
-//         formData.append('files.pictures', pictures.value[key])
-//       }
-//     }
-//     const stringifiedInfos = JSON.stringify({
-//       title: title.value,
-//       description: description.value,
-//       price: price.value,
-//       owner: GlobalStore.userId.value,
-//     })
-//     formData.append('data', stringifiedInfos)
-
-//     try {
-//       const response = await axios.post(
-//         'https://site--strapileboncoin--2m8zk47gvydr.code.run/api/offers',
-//         formData,
-//         {
-//           headers: {
-//             Authorization: 'Bearer ' + GlobalStore.userInfo.value.token,
-//             'Content-Type': 'multipart/form-data',
-//           },
-//         },
-//       )
-//       console.log(response)
-
-//       router.push({ name: 'offer', params: { id: response.data.data.id } })
-//     } catch (error) {
-//       console.log(error.response.data.message)
-//       console.log(error)
-//     }
-//   }
-//   isSubmitting.value = false
-// }
-
 const handleSubmit = async () => {
   isSubmitting.value = true
   if (!title.value || !description.value || !price.value || !pictures.value) {
@@ -178,7 +137,7 @@ const clearErrorMessage = () => {
             </div>
           </div>
         </div>
-        <div class="error" v-if="errorMessage">{{ errorMessage }}</div>
+        <div class="errorText" v-if="errorMessage">{{ errorMessage }}</div>
 
         <button :disabled="isSubmitting">{{ buttonText }}</button>
       </form>
@@ -281,8 +240,5 @@ textarea {
 
 input[type='file'] {
   display: none;
-}
-.error {
-  color: red;
 }
 </style>

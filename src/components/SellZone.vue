@@ -6,10 +6,16 @@ import AddButton from './AddButton.vue'
   <section class="wrapper">
     <h1>Des millions de petites annonces et autant d'occasions de se faire plaisir</h1>
     <div class="cover">
-      <img src="../assets/img/onde-corail-4Af4yJVc.svg" alt="" />
+      <img
+        src="https://res.cloudinary.com/dnq2ftd45/image/upload/v1743137082/onde-corail-4Af4yJVc_hokqw5.svg"
+        alt=""
+      />
       <h2>C'est le moment de vendre</h2>
       <AddButton />
-      <img src="../assets/img/téléchargement.svg" alt="" />
+      <img
+        src="https://res.cloudinary.com/dnq2ftd45/image/upload/v1743137082/te%CC%81le%CC%81chargement_wiqwwl.svg"
+        alt=""
+      />
     </div>
   </section>
 </template>

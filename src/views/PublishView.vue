@@ -201,6 +201,15 @@ textarea {
   padding: 0 10px;
   width: 40px;
 }
+
+/* --- */
+
+.pictures {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
+}
 .pictureSelector {
   border: 1px solid grey;
   border-radius: 12px;

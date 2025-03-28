@@ -56,10 +56,12 @@ const disconnect = () => {
           </RouterLink>
         </div>
         <div id="logOut" v-if="Store.userInfo.value.token">
-          <div>
-            <font-awesome-icon :icon="['far', 'user']" />
-            <p>{{ Store.userInfo.value.username }}</p>
-          </div>
+          <RouterLink :to="{ name: 'profile' }">
+            <div>
+              <font-awesome-icon :icon="['far', 'user']" />
+              <p>{{ Store.userInfo.value.username }}</p>
+            </div>
+          </RouterLink>
           <RouterLink :to="{ name: 'home' }">
             <p @click="disconnect">
               <font-awesome-icon :icon="['fas', 'sign-out-alt']" />
@@ -150,7 +152,7 @@ header {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 4px;
+  gap: 7px;
   /* border: 1px solid blue; */
   font-size: 15px;
 }
@@ -159,7 +161,7 @@ header {
   align-items: center;
   gap: 15px;
 }
-#logOut > a {
+#logOut > a:last-child {
   color: grey;
 }
 </style>

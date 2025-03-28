@@ -19,6 +19,9 @@ import {
   faEyeSlash,
   faCamera,
   faArrowRight,
+  faArrowLeft,
+  faTrash,
+  faEdit,
 } from '@fortawesome/free-solid-svg-icons'
 import { faUser, faPlusSquare, faHeart, faClock } from '@fortawesome/free-regular-svg-icons'
 import {} from '@fortawesome/free-brands-svg-icons'
@@ -38,6 +41,9 @@ library.add(
   faEyeSlash,
   faCamera,
   faArrowRight,
+  faArrowLeft,
+  faTrash,
+  faEdit,
 )
 
 const app = createApp(App).component('font-awesome-icon', FontAwesomeIcon)

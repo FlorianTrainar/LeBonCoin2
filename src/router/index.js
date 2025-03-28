@@ -5,6 +5,8 @@ import LoginView from '@/views/LoginView.vue'
 import PublishView from '@/views/PublishView.vue'
 import { inject } from 'vue'
 import PaymentView from '@/views/PaymentView.vue'
+import ProfileView from '../views/ProfileView.vue'
+import NotFoundView from '@/views/NotFoundView.vue'
 
 // import OfferView from '@/views/OfferView.vue'
 
@@ -52,6 +54,17 @@ const router = createRouter({
       component: PaymentView,
       meta: { requireAuth: true },
       props: true,
+    },
+    {
+      path: '/profile',
+      name: 'profile',
+      component: ProfileView,
+      meta: { requireAuth: true },
+    },
+    {
+      path: '/:catchAll(.*)',
+      name: 'notFound',
+      component: NotFoundView,
     },
   ],
   scrollBehavior() {

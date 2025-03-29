@@ -34,12 +34,16 @@ const handleSubmit = async () => {
     formData.append('data', stringifiedInfos)
 
     try {
-      const response = await axios.post('http://localhost:1337/api/offers', formData, {
-        headers: {
-          Authorization: 'Bearer ' + GlobalStore.userInfo.value.token,
-          'Content-Type': 'multipart/form-data',
+      const response = await axios.post(
+        'https://site--backend-leboncoin--p4zjh85jtpgn.code.run/api/offers',
+        formData,
+        {
+          headers: {
+            Authorization: 'Bearer ' + GlobalStore.userInfo.value.token,
+            'Content-Type': 'multipart/form-data',
+          },
         },
-      })
+      )
       console.log(response)
 
       router.push({ name: 'offer', params: { id: response.data.data.id } })
@@ -87,6 +91,7 @@ const clearErrorMessage = () => {
 </script>
 <template>
   <main>
+    token={{ GlobalStore }}
     <div class="wrapper">
       <h2>Déposer une annonce</h2>
       <form @submit.prevent="handleSubmit">

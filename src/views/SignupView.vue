@@ -55,15 +55,52 @@ const toggleVisibility = () => {
 //   isSubmitting.value = false
 // }
 
+// const handleSubmit = async () => {
+//   try {
+//     isSubmitting.value = true
+//     if (username.value && email.value && password.value) {
+//       const { data } = await axios.post('http://localhost:1337/api/auth/local/register', {
+//         email: email.value,
+//         username: username.value,
+//         password: password.value,
+//       })
+//       console.log(data)
+
+//       const userInfo = {
+//         username: data.user.username,
+//         token: data.jwt,
+//       }
+//       const userId = data.user.id
+
+//       Store.changeUserInfo(userInfo, userId)
+
+//       $cookies.set('userInfo', userInfo)
+//       $cookies.set('userId', userId)
+
+//       router.push({ name: 'home' })
+//     } else {
+//       errorMessage.value = 'Merci de remplir tous les champs'
+//     }
+//   } catch (error) {
+//     console.log(error.response.data.error)
+//     errorMessage.value = 'Un problème est survenu'
+//   }
+
+//   isSubmitting.value = false
+// }
+
 const handleSubmit = async () => {
   try {
     isSubmitting.value = true
     if (username.value && email.value && password.value) {
-      const { data } = await axios.post('http://localhost:1337/api/auth/local/register', {
-        email: email.value,
-        username: username.value,
-        password: password.value,
-      })
+      const { data } = await axios.post(
+        'https://site--backend-leboncoin--p4zjh85jtpgn.code.run/api/auth/local/register',
+        {
+          email: email.value,
+          username: username.value,
+          password: password.value,
+        },
+      )
       console.log(data)
 
       const userInfo = {

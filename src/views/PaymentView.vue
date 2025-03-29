@@ -51,7 +51,7 @@ const offerPrice = ref(0)
 onMounted(async () => {
   try {
     const { data } = await axios.get(
-      `http://localhost:1337/api/offers/${props.id}?populate[0]=pictures`,
+      `https://site--backend-leboncoin--p4zjh85jtpgn.code.run/api/offers/${props.id}?populate[0]=pictures`,
     )
     offerInfo.value = data.data.attributes
     offerPrice.value = parseFloat(offerInfo.value.price).toFixed(2)
@@ -90,7 +90,7 @@ const handlePayment = async () => {
       const stripeToken = token.id
 
       const response = await axios.post(
-        'http://localhost:1337/api/offers/buy',
+        'https://site--backend-leboncoin--p4zjh85jtpgn.code.run/api/offers/buy',
         {
           token: stripeToken,
           amount: total.value,

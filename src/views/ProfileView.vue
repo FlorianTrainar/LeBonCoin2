@@ -12,13 +12,16 @@ const userInitial = ref('')
 
 onMounted(async () => {
   try {
-    const { data } = await axios.get('http://localhost:1337/api/users/me?populate=*', {
-      headers: {
-        Authorization: 'Bearer ' + GlobalStore.userInfo.value.token,
+    const { data } = await axios.get(
+      'https://site--backend-leboncoin--p4zjh85jtpgn.code.run/api/users/me?populate=*',
+      {
+        headers: {
+          Authorization: 'Bearer ' + GlobalStore.userInfo.value.token,
 
-        'Content-Type': 'multipart/form-data',
+          'Content-Type': 'multipart/form-data',
+        },
       },
-    })
+    )
     userInfos.value = data
     userInitial.value = userInfos.value.username.slice(0, 1)
 
@@ -26,7 +29,7 @@ onMounted(async () => {
       console.log(userInfos.value.offers[i].id)
       try {
         const { data } = await axios.get(
-          `http://localhost:1337/api/offers/${userInfos.value.offers[i].id}?populate=pictures`,
+          `https://site--backend-leboncoin--p4zjh85jtpgn.code.run/api/offers/${userInfos.value.offers[i].id}?populate=pictures`,
         )
         offerList.value.push(data.data)
         console.log(offerList.value)
@@ -41,13 +44,16 @@ onMounted(async () => {
 
 const deleteOffer = async (id) => {
   try {
-    const { data } = await axios.delete(`http://localhost:1337/api/offers/${id}`, {
-      headers: {
-        Authorization: 'Bearer ' + GlobalStore.userInfo.value.token,
+    const { data } = await axios.delete(
+      `https://site--backend-leboncoin--p4zjh85jtpgn.code.run/api/offers/${id}`,
+      {
+        headers: {
+          Authorization: 'Bearer ' + GlobalStore.userInfo.value.token,
 
-        'Content-Type': 'multipart/form-data',
+          'Content-Type': 'multipart/form-data',
+        },
       },
-    })
+    )
     console.log(data)
     alert(`L'offre a bien été supprimée`)
 

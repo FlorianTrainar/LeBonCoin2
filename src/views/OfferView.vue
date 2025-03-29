@@ -36,10 +36,27 @@ const cycleList = computed(() => {
 //   return date.split('/').reverse().join('/')
 // })
 
+// onMounted(async () => {
+//   try {
+//     const { data } = await axios.get(
+//       `http://localhost:1337/api/offers/${props.id}?populate[0]=owner.avatar&populate[1]=pictures`,
+//     )
+//     offerInfo.value = data.data
+//     console.log(offerInfo.value)
+//   } catch (error) {
+//     console.log('catch>>', error)
+//   }
+// })
+
+// const correctedDate = computed(() => {
+//   let date = offerInfo.value.attributes.publishedAt.slice(0, 10).replaceAll('-', '/')
+//   return date.split('/').reverse().join('/')
+// })
+
 onMounted(async () => {
   try {
     const { data } = await axios.get(
-      `http://localhost:1337/api/offers/${props.id}?populate[0]=owner.avatar&populate[1]=pictures`,
+      `https://site--backend-leboncoin--p4zjh85jtpgn.code.run/api/offers/${props.id}?populate[0]=owner.avatar&populate[1]=pictures`,
     )
     offerInfo.value = data.data
     console.log(offerInfo.value)

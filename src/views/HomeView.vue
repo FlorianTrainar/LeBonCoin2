@@ -12,8 +12,6 @@ const props = defineProps(['page', 'title', 'pricemin', 'pricemax', 'sort'])
 const offersList = ref([])
 const pagination = ref('')
 
-// Version test :
-
 // onMounted(async () => {
 //   watchEffect(async () => {
 //     try {
@@ -25,7 +23,7 @@ const pagination = ref('')
 //         pricefilters += `&filters[price][$gte]=${props.pricemin}`
 //       }
 //       const { data } = await axios.get(
-//         `https://site--strapileboncoin--2m8zk47gvydr.code.run/api/offers?populate[0]=owner.avatar&populate[1]=pictures&pagination[page]=${props.page}&pagination[pageSize]=10&sort=${props.sort}${pricefilters}&filters[title][$containsi]=${props.title}`,
+//         `http://localhost:1337/api/offers?populate[0]=owner.avatar&populate[1]=pictures&pagination[page]=${props.page}&pagination[pageSize]=10&sort=${props.sort}${pricefilters}&filters[title][$containsi]=${props.title}`,
 //       )
 
 //       offersList.value = data
@@ -49,7 +47,7 @@ onMounted(async () => {
         pricefilters += `&filters[price][$gte]=${props.pricemin}`
       }
       const { data } = await axios.get(
-        `http://localhost:1337/api/offers?populate[0]=owner.avatar&populate[1]=pictures&pagination[page]=${props.page}&pagination[pageSize]=10&sort=${props.sort}${pricefilters}&filters[title][$containsi]=${props.title}`,
+        `https://site--backend-leboncoin--p4zjh85jtpgn.code.run/api/offers?populate[0]=owner.avatar&populate[1]=pictures&pagination[page]=${props.page}&pagination[pageSize]=10&sort=${props.sort}${pricefilters}&filters[title][$containsi]=${props.title}`,
       )
 
       offersList.value = data
@@ -65,6 +63,7 @@ onMounted(async () => {
 
 <template>
   <main>
+    <!-- test = {{ offersList }} -->
     <div class="wrapper">
       <FiltersPart />
       <sell-zone />

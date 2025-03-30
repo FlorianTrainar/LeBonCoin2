@@ -101,4 +101,22 @@ form p {
 .price span {
   margin: 0px 10px;
 }
+
+/*  */
+/* ------- Media Query -------- */
+/*  */
+
+@media (max-width: 1070px) {
+  form {
+    flex-direction: column;
+    margin-bottom: 20px;
+  }
+  form > div {
+    align-items: center;
+  }
+}
+@media (max-width: 960px) {
+}
+@media (max-width: 650px) {
+}
 </style>

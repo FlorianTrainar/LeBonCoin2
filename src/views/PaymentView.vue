@@ -125,6 +125,76 @@ const handlePayment = async () => {
     <p>id : {{ props.id }}</p> -->
     <div class="wrapper">
       <h2>Finalisez votre paiement</h2>
+      <!--  -->
+
+      <div class="articleArea" id="smallScreen">
+        <section class="articleSection">
+          <div class="infoZone">
+            <div>
+              <img
+                v-if="offerInfo.pictures"
+                :src="offerInfo.pictures.data[0].attributes.url"
+                alt=""
+              />
+              <h3>{{ offerInfo.title }}</h3>
+            </div>
+            <p class="price">{{ GlobalStore.correctedPrice(offerPrice.toString()) }} €</p>
+          </div>
+          <div class="deliveryZone">
+            <form action="">
+              <h3>Mode de remise</h3>
+              <div>
+                <input
+                  type="radio"
+                  id="option1"
+                  name="delivery"
+                  value="0"
+                  v-model="deliveryPrice"
+                  @click="$emit(deliveryMethod, 0)"
+                />
+                <label for="option1"
+                  ><p>Remise en main propre</p>
+                  <span
+                    >Payez en ligne et récupérer votre achat en main propre lors de votre
+                    rendez-vous avec le vendeur</span
+                  ></label
+                >
+              </div>
+              <div>
+                <div>
+                  <input
+                    type="radio"
+                    id="option2"
+                    name="delivery"
+                    value="15,60"
+                    v-model="deliveryPrice"
+                  />
+                  <label for="option2"
+                    ><p>Colissimo</p>
+                    <span>à votre domicile sous 2-3 jours</span></label
+                  >
+                </div>
+                <p class="price">15, 60 €</p>
+              </div>
+            </form>
+            <div>
+              <div>
+                <h3>Protection leboncoin</h3>
+                <p class="price">0, 99 €</p>
+              </div>
+              <p>Votre argent est sécurisé et versé au bon moment</p>
+              <p>Notre service client dédié vous accompagne</p>
+            </div>
+          </div>
+          <div class="totalZone">
+            <h3>Total</h3>
+            <p class="price">{{ GlobalStore.correctedPrice(total.toString()) }} €</p>
+          </div>
+        </section>
+      </div>
+
+      <!--  -->
+
       <div>
         <!-- User Area -->
 
@@ -168,7 +238,7 @@ const handlePayment = async () => {
 
         <!-- Article Area -->
 
-        <div class="articleArea">
+        <div class="articleArea" id="fullScreen">
           <section class="articleSection">
             <div class="infoZone">
               <div>
@@ -179,7 +249,7 @@ const handlePayment = async () => {
                 />
                 <h3>{{ offerInfo.title }}</h3>
               </div>
-              <p class="price">{{ offerPrice }} €</p>
+              <p class="price">{{ GlobalStore.correctedPrice(offerPrice.toString()) }} €</p>
             </div>
             <div class="deliveryZone">
               <form action="">
@@ -215,13 +285,13 @@ const handlePayment = async () => {
                       <span>à votre domicile sous 2-3 jours</span></label
                     >
                   </div>
-                  <p class="price">15.60 €</p>
+                  <p class="price">15, 60 €</p>
                 </div>
               </form>
               <div>
                 <div>
                   <h3>Protection leboncoin</h3>
-                  <p class="price">0.99 €</p>
+                  <p class="price">0, 99 €</p>
                 </div>
                 <p>Votre argent est sécurisé et versé au bon moment</p>
                 <p>Notre service client dédié vous accompagne</p>
@@ -229,7 +299,7 @@ const handlePayment = async () => {
             </div>
             <div class="totalZone">
               <h3>Total</h3>
-              <p class="price">{{ total }} €</p>
+              <p class="price">{{ GlobalStore.correctedPrice(total.toString()) }} €</p>
             </div>
           </section>
         </div>
@@ -242,12 +312,17 @@ const handlePayment = async () => {
 .wrapper > div {
   display: flex;
   justify-content: space-between;
+  gap: 15px;
 }
 .userArea {
-  width: 64%;
+  width: 63%;
 }
+
 .articleArea {
-  width: 34%;
+  width: 360px;
+}
+#smallScreen {
+  display: none;
 }
 
 /* UserArea */
@@ -277,6 +352,7 @@ const handlePayment = async () => {
   border-radius: 10px;
   padding: 0;
 }
+
 .price {
   color: var(--check-);
   font-weight: bold;
@@ -306,7 +382,7 @@ span {
   gap: 10px;
 }
 .infoZone > div:first-of-type > h3 {
-  width: 100px;
+  width: 130px;
 }
 /* --- */
 .deliveryZone {
@@ -332,8 +408,10 @@ form,
 form > div {
   display: flex;
   gap: 10px;
-  justify-content: space-between;
   align-items: center;
+}
+form > div:nth-of-type(2) {
+  justify-content: space-between;
 }
 form > div > div {
   display: flex;
@@ -345,5 +423,35 @@ form > div > div {
   margin: 25px 15px 20px 15px;
   display: flex;
   justify-content: space-between;
+}
+
+/*  */
+/* ------- Media Query -------- */
+/*  */
+
+@media (max-width: 1070px) {
+  #fullScreen {
+    flex-shrink: 0;
+  }
+}
+@media (max-width: 960px) {
+  #smallScreen {
+    display: block;
+    width: 100%;
+  }
+  #fullScreen {
+    display: none;
+  }
+  .infoZone > div:first-of-type > h3 {
+    width: 400px;
+  }
+  .userArea {
+    width: 100%;
+  }
+}
+@media (max-width: 650px) {
+  .infoZone > div:first-of-type > h3 {
+    width: 200px;
+  }
 }
 </style>

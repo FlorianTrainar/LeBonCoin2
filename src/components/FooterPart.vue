@@ -2,7 +2,7 @@
 <template>
   <footer>
     <p>
-      Made by <a href="https://www.lereacteur.io/">Le Reacteur</a> with
+      Made by <a href="">Florian Trainar</a> with
       <a href="https://vuejs.org/">Vue.js</a>
     </p>
   </footer>

@@ -86,7 +86,13 @@ onMounted(async () => {
 .offerCardZone {
   display: flex;
   flex-wrap: wrap;
+  flex-shrink: 0;
+}
 
-  gap: 26px;
+@media (max-width: 650px) {
+  .offerCardZone {
+    flex-direction: column;
+    align-items: center;
+  }
 }
 </style>

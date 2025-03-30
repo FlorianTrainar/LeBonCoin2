@@ -1,6 +1,9 @@
 <script setup>
 import { RouterLink } from 'vue-router'
 import { computed } from 'vue'
+import { inject } from 'vue'
+
+const GlobalStore = inject('GlobalStore')
 
 const props = defineProps({
   offerInfos: {
@@ -12,21 +15,19 @@ const props = defineProps({
     required: true,
   },
 })
+const price = props.offerInfos.price.toString()
+// const correctedPrice = computed(() => {
+//   let newPrice = ''
 
-const correctedPrice = computed(() => {
-  const price = props.offerInfos.price.toString()
-
-  let newPrice = ''
-
-  for (let i = price.length - 1; i >= 0; i--) {
-    if (newPrice.length === 3 || newPrice.length === 7) {
-      newPrice = price[i] + ' ' + newPrice
-    } else {
-      newPrice = price[i] + newPrice
-    }
-  }
-  return newPrice
-})
+//   for (let i = price.length - 1; i >= 0; i--) {
+//     if (newPrice.length === 3 || newPrice.length === 7) {
+//       newPrice = price[i] + ' ' + newPrice
+//     } else {
+//       newPrice = price[i] + newPrice
+//     }
+//   }
+//   return newPrice
+// })
 
 const correctedDate = computed(() => {
   let date = props.offerInfos.publishedAt.slice(0, 10).replaceAll('-', '/')
@@ -44,6 +45,9 @@ const correctedDate = computed(() => {
               :src="offerInfos.owner.data.attributes.avatar.data.attributes.url"
               alt=""
             />
+            <div v-else>
+              <p>{{ offerInfos.owner.data.attributes.username[0].toUpperCase() }}</p>
+            </div>
             <h4>{{ offerInfos.owner.data.attributes.username }}</h4>
           </div>
           <div class="offerZone">
@@ -56,12 +60,12 @@ const correctedDate = computed(() => {
               v-else
               src="../assets/img/depositphotos_247872612-stock-illustration-no-image-available-icon-vector.jpg"
             />
-            <h3>{{ offerInfos.title }}</h3>
-            <h3>{{ correctedPrice }} €</h3>
+            <h4>{{ offerInfos.title }}</h4>
+            <h4>{{ GlobalStore.correctedPrice(price) }} €</h4>
           </div>
         </div>
         <div class="bottomZone">
-          <p>{{ correctedDate }}</p>
+          <p class="date">{{ correctedDate }}</p>
           <font-awesome-icon :icon="['far', 'heart']" />
         </div>
       </div>
@@ -70,56 +74,103 @@ const correctedDate = computed(() => {
 </template>
 <style scoped>
 section {
-  margin: 10px 0 30px 0;
-  width: 18%;
-  height: 370px;
-  border: solid 1px blues;
+  margin: 10px 5px 30px 5px;
+  width: 199px;
+  height: 350px;
 }
 .card {
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  width: 100%;
-  height: 100%;
+  flex-shrink: 0;
+  flex-wrap: wrap;
 }
 
 .ownerZone {
   display: flex;
   align-items: center;
   gap: 5px;
-  padding: 3px;
+  padding-left: 5px;
+  margin-bottom: 5px;
+  height: 30px;
 }
 .ownerZone img {
   border-radius: 50%;
-  width: 28px;
-  object-fit: cover;
+  width: 30px;
+  height: 30px;
+  object-fit: contain;
 }
+.ownerZone > div {
+  background-color: var(--grey-);
+  color: white;
+  font-size: 20px;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  text-align: center;
+  line-height: 30px;
+}
+/* --- */
+
 .offerZone {
   display: flex;
   flex-direction: column;
   gap: 6px;
   margin-bottom: 20px;
+  height: 300px;
+}
+.offerZone h4 {
+  padding-left: 5px;
 }
 .offerZone img {
-  width: 100%;
   height: 220px;
+  width: 100%;
   border-radius: 20px;
   object-fit: cover;
-}
-.offerZone div {
-  color: grey;
-  font-size: 12px;
-  display: flex;
-  justify-content: space-between;
+  flex-shrink: 0;
+  flex-wrap: wrap;
 }
 
 .bottomZone {
   display: flex;
   justify-content: space-between;
+  padding: 0 5px;
 }
-p {
-  font-size: 14px;
+
+/*  */
+/* ------- Media Query -------- */
+/*  */
+
+@media (max-width: 1070px) {
+  .offerZone {
+    height: 280px;
+    gap: 2px;
+  }
+  section {
+    width: 23%;
+  }
 }
-h4 {
+@media (max-width: 960px) {
+  section {
+    width: 31%;
+  }
+}
+@media (max-width: 650px) {
+  section {
+    width: 60%;
+  }
+  .ownerZone {
+    display: flex;
+    justify-content: center;
+  }
+  .offerZone {
+    align-items: center;
+  }
+  .offerZone img {
+    object-fit: contain;
+  }
+  .offerZone h4 {
+    text-align: center;
+    margin: 5px 0 1px;
+  }
 }
 </style>

@@ -88,7 +88,7 @@ const deleteOffer = async (id) => {
             </RouterLink>
           </div>
           <div>
-            <p>{{ offer.attributes.price }} €</p>
+            <p>{{ GlobalStore.correctedPrice(offer.attributes.price.toString()) }} €</p>
           </div>
           <div>
             <font-awesome-icon :icon="['fas', 'edit']" @click="updateOffer(offer.id)" />
@@ -156,7 +156,10 @@ section:first-child {
   padding: 10px 15px;
 }
 .offerCard div:first-child {
-  width: 30%;
+  width: 70%;
+}
+.offerCard div:first-child h3 {
+  width: 100%;
 }
 .offerCard a {
   display: flex;
@@ -165,9 +168,7 @@ section:first-child {
   width: 100%;
   gap: 15px;
 }
-.offerCard div:nth-child(2) {
-  width: 30%;
-}
+
 .offerCard img {
   width: 100px;
   height: 100px;
@@ -186,4 +187,14 @@ section:first-child {
 }
 
 /* --- */
+/* ---Media Query */
+/* --- */
+
+@media (max-width: 1070px) {
+}
+@media (max-width: 960px) {
+}
+
+@media (max-width: 650px) {
+}
 </style>

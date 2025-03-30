@@ -6,7 +6,7 @@
 
 :root {
   --orange-: #ec5a12;
-  --grey-: #617c93;
+  --grey-: #93a0ab;
   --background-: #f4f9fe;
   --cover-background-: #fde9de;
   --blue-: #0f4071;
@@ -14,12 +14,19 @@
   --background-check-: #fde9de;
   --check-: #893810;
   --header-height-: 110px;
+  --header-height-small-:         
+;
 }
 
 .wrapper {
   width: 1050px;
   margin: 0 auto;
+
+  @media (max-width: 1070px) {
+    width: 95%;
+  }
 }
+
 main {
   margin-top: calc(var(--header-height-) + 30px);
   margin-bottom: 30px;
@@ -38,15 +45,19 @@ h2 {
 }
 h3 {
   font-weight: bold;
-  font-size: 17px;
+  font-size: 18px;
 }
 h4 {
   font-weight: bold;
-  font-size: 15px;
+  font-size: 17px;
 }
 .errorText {
   font-weight: bold;
   color: red;
+}
+.date {
+  font-size: 13px;
+  color: grey;
 }
 a {
   text-decoration: none;

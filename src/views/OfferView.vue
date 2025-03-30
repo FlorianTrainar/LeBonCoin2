@@ -3,8 +3,12 @@ import axios from 'axios'
 import { RouterLink } from 'vue-router'
 import { onMounted, ref, computed } from 'vue'
 import { useCycleList } from '@vueuse/core'
+import { inject } from 'vue'
+
+const GlobalStore = inject('GlobalStore')
 
 const offerInfo = ref(null)
+const price = ref(null)
 
 const props = defineProps({
   id: { required: true },
@@ -63,6 +67,8 @@ onMounted(async () => {
   } catch (error) {
     console.log('catch>>', error)
   }
+
+  price.value = offerInfo.value.attributes.price.toString()
 })
 
 const correctedDate = computed(() => {
@@ -77,7 +83,7 @@ const correctedDate = computed(() => {
     <div class="wrapper" v-else>
       <section class="topPart">
         <div class="productPicture">
-          <button @click="cycleList.prev()">
+          <button v-if="offerInfo.attributes.pictures.data.length > 1" @click="cycleList.prev()">
             <font-awesome-icon :icon="['fas', 'angle-left']" />
           </button>
           <img
@@ -89,7 +95,7 @@ const correctedDate = computed(() => {
             v-else
             src="../assets/img/depositphotos_247872612-stock-illustration-no-image-available-icon-vector.jpg"
           />
-          <button @click="cycleList.next()">
+          <button v-if="offerInfo.attributes.pictures.data.length > 1" @click="cycleList.next()">
             <font-awesome-icon :icon="['fas', 'angle-right']" />
           </button>
         </div>
@@ -101,6 +107,9 @@ const correctedDate = computed(() => {
                 :src="offerInfo.attributes.owner.data.attributes.avatar.data.attributes.url"
                 alt=""
               />
+              <div v-else>
+                <p>{{ offerInfo.attributes.owner.data.attributes.username[0].toUpperCase() }}</p>
+              </div>
 
               <h3>{{ offerInfo.attributes.owner.data.attributes.username }}</h3>
             </div>
@@ -114,15 +123,25 @@ const correctedDate = computed(() => {
             <RouterLink :to="{ name: 'payment', params: { id: offerInfo.id } }">
               <button>Acheter</button>
             </RouterLink>
-            <button>Message</button>
+            <button id="messageButton">Message</button>
           </div>
         </div>
       </section>
       <section class="bottomPart">
         <h2>{{ offerInfo.attributes.title }}</h2>
         <div>
-          <h3>{{ offerInfo.attributes.price }} €</h3>
-          <p>{{ correctedDate }}</p>
+          <h3>{{ GlobalStore.correctedPrice(price) }} €</h3>
+          <p class="date">{{ correctedDate }}</p>
+          <div class="smallButtonZone">
+            <div>
+              <RouterLink :to="{ name: 'payment', params: { id: offerInfo.id } }">
+                <button>Acheter</button>
+              </RouterLink>
+            </div>
+            <div>
+              <button id="messageButton">Message</button>
+            </div>
+          </div>
         </div>
         <div>
           <h3>Description</h3>
@@ -143,10 +162,9 @@ section {
   justify-content: space-between;
 }
 .productPicture {
-  flex: 5;
   display: flex;
   justify-content: space-evenly;
-  gap: 100px;
+  gap: 50px;
 }
 .productPicture img {
   height: 380px;
@@ -165,13 +183,23 @@ section {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  flex: 2;
+  width: 300px;
   padding: 20px;
 }
 .ownerInfo {
   display: flex;
   flex-direction: column;
   gap: 20px;
+}
+.ownerInfo > div > div {
+  background-color: var(--grey-);
+  color: white;
+  font-size: 35px;
+  border-radius: 50%;
+  width: 70px;
+  height: 70px;
+  text-align: center;
+  line-height: 70px;
 }
 .ownerInfo > div:first-child {
   display: flex;
@@ -205,8 +233,11 @@ section {
   font-size: 16px;
   padding: 13px;
 }
-.buttonZone > button:last-of-type {
+#messageButton {
   background-color: var(--blue-);
+}
+.smallButtonZone > div {
+  display: none;
 }
 
 .bottomPart {
@@ -214,11 +245,50 @@ section {
   flex-direction: column;
   gap: 20px;
 }
-.bottomPart div {
+.bottomPart > div {
   display: flex;
   flex-direction: column;
   gap: 10px;
   border-bottom: var(--grey-border-) solid 1px;
-  height: 100px;
+  padding-bottom: 10px;
+}
+
+/*  */
+/* ------- Media Query -------- */
+/*  */
+
+@media (max-width: 1070px) {
+  .productPicture {
+    gap: 10px;
+  }
+}
+@media (max-width: 960px) {
+  .ownerBlock {
+    display: none;
+  }
+  .productPicture {
+    margin: 0 auto;
+  }
+  .smallButtonZone {
+    display: flex;
+    flex-direction: column;
+
+    margin: 10px 0;
+    gap: 5px;
+  }
+  .smallButtonZone > div {
+    display: block;
+  }
+  .smallButtonZone button {
+    width: 95%;
+    height: 40px;
+    font-size: 15px;
+    margin: 0 20px;
+  }
+}
+@media (max-width: 650px) {
+  .productPicture img {
+    width: 80%;
+  }
 }
 </style>

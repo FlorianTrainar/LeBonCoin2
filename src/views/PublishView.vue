@@ -91,7 +91,7 @@ const clearErrorMessage = () => {
 </script>
 <template>
   <main>
-    token={{ GlobalStore }}
+    <!-- token={{ GlobalStore }} -->
     <div class="wrapper">
       <h2>Déposer une annonce</h2>
       <form @submit.prevent="handleSubmit">
@@ -190,7 +190,7 @@ textarea {
   display: flex;
   flex-direction: row;
   align-items: center;
-  width: 25%;
+  width: 250px;
   border: 1px solid grey;
   border-radius: 12px;
 }
@@ -254,5 +254,39 @@ textarea {
 
 input[type='file'] {
   display: none;
+}
+input[type='number'] {
+  -moz-appearance: textfield;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+}
+
+/*  */
+/* ------- Media Query -------- */
+/*  */
+
+@media (max-width: 1070px) {
+  input,
+  textarea,
+  p {
+    width: 750px;
+  }
+}
+@media (max-width: 960px) {
+  input,
+  textarea,
+  p {
+    width: 85%;
+  }
+}
+@media (max-width: 650px) {
+  input,
+  textarea,
+  p {
+    width: 100%;
+  }
 }
 </style>

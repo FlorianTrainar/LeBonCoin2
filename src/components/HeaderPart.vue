@@ -40,7 +40,9 @@ const disconnect = () => {
         </RouterLink>
 
         <div class="centerBlock">
-          <AddButton />
+          <div class="buttonHider">
+            <AddButton />
+          </div>
 
           <form @submit.prevent="handleSearch" id="searchInput">
             <input type="text" placeholder="Rechercher sur leboncoin" v-model="searchInput" />
@@ -49,6 +51,7 @@ const disconnect = () => {
             </button>
           </form>
         </div>
+
         <div id="logIn" v-if="!Store.userInfo.value.token">
           <RouterLink :to="{ name: 'login' }">
             <font-awesome-icon :icon="['far', 'user']" />
@@ -90,6 +93,13 @@ const disconnect = () => {
         <font-awesome-icon :icon="['fas', 'circle']" />
         <p>Autres</p>
       </div>
+
+      <form class="formReplacer" @submit.prevent="handleSearch" id="searchInput">
+        <input type="text" placeholder="Rechercher sur leboncoin" v-model="searchInput" />
+        <button>
+          <font-awesome-icon :icon="['fas', 'search']" />
+        </button>
+      </form>
     </div>
   </header>
 </template>
@@ -102,6 +112,8 @@ header {
   height: var(--header-height-);
   top: 0px;
 }
+
+/* TOP PART */
 
 .topPart {
   display: flex;
@@ -116,6 +128,7 @@ header {
   display: flex;
   gap: 20px;
 }
+
 #searchInput {
   background-color: var(--background-);
   padding: 5px;
@@ -137,23 +150,12 @@ header {
   line-height: 8px;
 }
 
-.bottomPart {
-  display: flex;
-  justify-content: space-between;
-  margin: 20px 0;
-}
-
-.bottomPart svg {
-  font-size: 2px;
-  align-self: center;
-}
 #logIn a,
 #logOut div:first-child {
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 7px;
-  /* border: 1px solid blue; */
   font-size: 15px;
 }
 #logOut {
@@ -163,5 +165,51 @@ header {
 }
 #logOut > a:last-child {
   color: grey;
+}
+
+/*  BOTTOM PART */
+
+.bottomPart {
+  display: flex;
+  justify-content: space-between;
+  margin: 20px 0;
+  overflow: scroll;
+}
+.formReplacer {
+  display: none;
+}
+.bottomPart p {
+  flex-wrap: nowrap;
+  flex-shrink: 0;
+  padding: 0 10px;
+  /* border: blue solid 1px; */
+}
+
+.bottomPart svg {
+  font-size: 2px;
+  align-self: center;
+}
+
+/*  */
+/* ------- Media Query -------- */
+/*  */
+
+@media (max-width: 1070px) {
+}
+@media (max-width: 960px) {
+  .buttonHider {
+    display: none;
+  }
+}
+@media (max-width: 650px) {
+  .centerBlock,
+  .bottomPart {
+    display: none;
+  }
+  .formReplacer {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+  }
 }
 </style>

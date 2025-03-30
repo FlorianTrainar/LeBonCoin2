@@ -59,6 +59,37 @@ const changeUserInfo = (info, id) => {
   userId.value = id
 }
 
-app.provide('GlobalStore', { userInfo: userInfo, userId: userId, changeUserInfo: changeUserInfo })
+const correctedPrice = (price) => {
+  let newPrice = ''
+
+  for (let i = price.length - 1; i >= 0; i--) {
+    if (price[i] === '.') {
+      newPrice = ',' + newPrice
+    } else {
+      if (newPrice.length === 3 || newPrice.length === 7) {
+        newPrice = price[i] + ' ' + newPrice
+      } else {
+        newPrice = price[i] + newPrice
+      }
+    }
+  }
+  console.log('1 = ' + newPrice[newPrice.length - 3])
+  if (newPrice[newPrice.length - 3] === ',') {
+    newPrice =
+      newPrice.substring(0, newPrice.length - 4) +
+      newPrice.substring(newPrice.length - 3, newPrice.length - 2) +
+      ' ' +
+      newPrice.substring(newPrice.length - 2, newPrice.length)
+    console.log(newPrice)
+  }
+  return newPrice
+}
+
+app.provide('GlobalStore', {
+  userInfo: userInfo,
+  userId: userId,
+  changeUserInfo: changeUserInfo,
+  correctedPrice: correctedPrice,
+})
 
 app.mount('#app')

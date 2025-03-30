@@ -78,5 +78,11 @@ img:last-of-type {
   }
 }
 @media (max-width: 650px) {
+  h2 {
+    text-align: center;
+  }
+  img {
+    width: 20%;
+  }
 }
 </style>

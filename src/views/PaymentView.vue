@@ -451,7 +451,7 @@ form > div > div {
 }
 @media (max-width: 650px) {
   .infoZone > div:first-of-type > h3 {
-    width: 200px;
+    width: 140px;
   }
 }
 </style>

@@ -90,7 +90,7 @@ const deleteOffer = async (id) => {
           <div>
             <p>{{ GlobalStore.correctedPrice(offer.attributes.price.toString()) }} €</p>
           </div>
-          <div>
+          <div class="icons">
             <font-awesome-icon :icon="['fas', 'edit']" @click="updateOffer(offer.id)" />
 
             <font-awesome-icon :icon="['fas', 'trash']" @click="deleteOffer(offer.id)" />
@@ -156,11 +156,9 @@ section:first-child {
   padding: 10px 15px;
 }
 .offerCard div:first-child {
-  width: 70%;
+  width: 65%;
 }
-.offerCard div:first-child h3 {
-  width: 100%;
-}
+
 .offerCard a {
   display: flex;
   align-items: center;
@@ -180,7 +178,7 @@ section:first-child {
   font-weight: bold;
   font-size: 18px;
 }
-.offerCard svg {
+.icons svg {
   color: var(--orange-);
   margin: 0 5px;
   cursor: pointer;
@@ -196,5 +194,16 @@ section:first-child {
 }
 
 @media (max-width: 650px) {
+  h3 {
+    font-size: 15px;
+  }
+  .offerCard p {
+    font-size: 16px;
+  }
+  .icons {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
 }
 </style>

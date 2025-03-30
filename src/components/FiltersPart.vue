@@ -35,7 +35,7 @@ const handleSubmit = () => {
   <form @submit.prevent="handleSubmit">
     <div class="price">
       <p>Prix</p>
-      <div>
+      <div class="priceInputs">
         <label
           ><input type="number" placeholder="Minimum" v-model="priceminRequested" /><span
             >€</span
@@ -50,7 +50,7 @@ const handleSubmit = () => {
     </div>
     <div>
       <p for="">Tri</p>
-      <div>
+      <div class="sortInputs">
         <label for="croissant">Prix croissants</label>
         <input type="radio" id="croissant" value="price:asc" v-model="sortRequested" />
         <label for="décroissant">Prix décroissants</label>
@@ -75,9 +75,13 @@ form > div {
   gap: 10px;
   margin-bottom: 30px;
 }
-form > div > div {
+.priceInputs,
+.sortInputs {
   display: flex;
   gap: 15px;
+}
+.sortInputs {
+  margin: 0 10px;
 }
 form input {
   border: none;
@@ -118,5 +122,11 @@ form p {
 @media (max-width: 960px) {
 }
 @media (max-width: 650px) {
+  .price input {
+    width: 120px;
+  }
+  .sortInputs {
+    gap: 5px;
+  }
 }
 </style>

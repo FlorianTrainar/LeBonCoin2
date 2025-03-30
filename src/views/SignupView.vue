@@ -215,4 +215,11 @@ span {
   font-weight: bold;
   text-decoration: underline;
 }
+
+/* --- */
+@media (max-width: 650px) {
+  .formSection {
+    width: 100%;
+  }
+}
 </style>

@@ -2,6 +2,7 @@
 import { onMounted, ref, inject } from 'vue'
 import { RouterLink, useRouter } from 'vue-router'
 import axios from 'axios'
+import AddButton from '@/components/AddButton.vue'
 
 const router = useRouter()
 
@@ -77,9 +78,10 @@ const deleteOffer = async (id) => {
           <p>{{ userInfos.email }}</p>
         </div>
       </section>
-      <h3>{{ offerList.length }} annonces</h3>
+      <h3 v-if="offerList.length === 1">{{ offerList.length }} annonce</h3>
+      <h3 v-else-if="offerList.length > 1">{{ offerList.length }} annonces</h3>
 
-      <section>
+      <section v-if="offerList.length > 0">
         <div class="offerCard" v-for="offer in offerList" :key="offer.id">
           <div>
             <RouterLink :to="{ name: 'offer', params: { id: offer.id } }">
@@ -105,6 +107,15 @@ const deleteOffer = async (id) => {
           </div>
         </div>
       </section>
+
+      <div class="noOffer" v-else>
+        <img src="../assets/img/sans-annonce.png" alt="" />
+        <h2>C'est désert ici !</h2>
+        <p><span>Vous n'avez aucune annonce en ligne</span></p>
+        <div>
+          <AddButton />
+        </div>
+      </div>
 
       <!-- test= {{ GlobalStore.userInfo.value.token }} test={{ userInfos }} -->
     </div>
@@ -190,6 +201,20 @@ section:first-child {
   color: var(--orange-);
   margin: 0 5px;
   cursor: pointer;
+}
+
+/* ---  */
+
+.noOffer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
+.noOffer div {
+  padding: 0 75px;
+  background-color: var(--orange-);
+  border-radius: 15px;
 }
 
 /* --- */

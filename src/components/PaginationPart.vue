@@ -6,18 +6,18 @@ const props = defineProps(['pagination'])
 
 const router = useRouter()
 const route = useRoute()
-const page = ref(1)
+// const page = ref(parseInt(route.query.page) || 1)
 
 const handlePageSelector = (num) => {
   const queries = { ...route.query }
   queries.page = num
-  page.value = queries.page
+  // page.value = queries.page
   router.push({ name: 'home', query: queries })
 }
 </script>
 <template>
   <section>
-    <button v-if="page > 1" @click="handlePageSelector(page - 1)">
+    <button v-if="pagination.page > 1" @click="handlePageSelector(pagination.page - 1)">
       <font-awesome-icon :icon="['fas', 'angle-left']" />
     </button>
     <div>
@@ -32,7 +32,10 @@ const handlePageSelector = (num) => {
         {{ pageNumber }}
       </button>
     </div>
-    <button v-if="page < pagination.pageCount" @click="handlePageSelector(page + 1)">
+    <button
+      v-if="pagination.page < pagination.pageCount"
+      @click="handlePageSelector(pagination.page + 1)"
+    >
       <font-awesome-icon :icon="['fas', 'angle-right']" />
     </button>
   </section>

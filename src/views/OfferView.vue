@@ -69,7 +69,7 @@ onMounted(async () => {
     console.log('catch>>', error)
   }
 
-  price.value = offerInfo.value.attributes.price.toString()
+  price.value = offerInfo.value.attributes.price.toFixed(2).toString()
   if (offerInfo.value.attributes.pictures.data) {
     numberOfPictures.value = offerInfo.value.attributes.pictures.data.length
   }
@@ -87,7 +87,7 @@ const correctedDate = computed(() => {
     <div class="wrapper" v-else>
       <section class="topPart">
         <div class="productPicture">
-          <button v-if="num > 1" @click="cycleList.prev()">
+          <button v-if="numberOfPictures > 1" @click="cycleList.prev()">
             <font-awesome-icon :icon="['fas', 'angle-left']" />
           </button>
           <img

@@ -15,7 +15,7 @@ const props = defineProps({
     required: true,
   },
 })
-const price = props.offerInfos.price.toString()
+const price = props.offerInfos.price.toFixed(2).toString()
 // const correctedPrice = computed(() => {
 //   let newPrice = ''
 

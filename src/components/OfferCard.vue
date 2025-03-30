@@ -120,6 +120,8 @@ section {
 }
 .offerZone h4 {
   padding-left: 5px;
+  word-wrap: break-word;
+  width: 200px;
 }
 .offerZone img {
   height: 220px;

@@ -9,6 +9,7 @@ const GlobalStore = inject('GlobalStore')
 
 const offerInfo = ref(null)
 const price = ref(null)
+const numberOfPictures = ref(0)
 
 const props = defineProps({
   id: { required: true },
@@ -69,6 +70,9 @@ onMounted(async () => {
   }
 
   price.value = offerInfo.value.attributes.price.toString()
+  if (offerInfo.value.attributes.pictures.data) {
+    numberOfPictures.value = offerInfo.value.attributes.pictures.data.length
+  }
 })
 
 const correctedDate = computed(() => {
@@ -83,7 +87,7 @@ const correctedDate = computed(() => {
     <div class="wrapper" v-else>
       <section class="topPart">
         <div class="productPicture">
-          <button v-if="offerInfo.attributes.pictures.data.length > 1" @click="cycleList.prev()">
+          <button v-if="num > 1" @click="cycleList.prev()">
             <font-awesome-icon :icon="['fas', 'angle-left']" />
           </button>
           <img
@@ -95,7 +99,7 @@ const correctedDate = computed(() => {
             v-else
             src="../assets/img/depositphotos_247872612-stock-illustration-no-image-available-icon-vector.jpg"
           />
-          <button v-if="offerInfo.attributes.pictures.data.length > 1" @click="cycleList.next()">
+          <button v-if="numberOfPictures > 1" @click="cycleList.next()">
             <font-awesome-icon :icon="['fas', 'angle-right']" />
           </button>
         </div>

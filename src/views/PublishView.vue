@@ -16,8 +16,11 @@ const isSubmitting = ref(false)
 
 const handleSubmit = async () => {
   isSubmitting.value = true
-  if (!title.value || !description.value || !price.value || !pictures.value) {
+  console.log(title.value.length)
+  if (!title.value || !description.value || !price.value) {
     errorMessage.value = 'Veuillez remplir tous les champs'
+  } else if (title.value.length > 50) {
+    errorMessage.value = 'Le titre ne doit pas dépasser 50 caractères'
   } else {
     const formData = new FormData()
     for (const key in pictures.value) {
@@ -121,7 +124,15 @@ const clearErrorMessage = () => {
         <div>
           <label for="price">Votre prix de vente</label>
           <div class="price">
-            <input type="number" id="price" v-model="price" @input="clearErrorMessage" />
+            <input
+              type="number"
+              id="price"
+              min="0"
+              max="999999,99"
+              step="0.01"
+              v-model="price"
+              @input="clearErrorMessage"
+            />
             <p>€</p>
           </div>
         </div>

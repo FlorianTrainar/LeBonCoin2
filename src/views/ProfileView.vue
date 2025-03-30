@@ -83,7 +83,15 @@ const deleteOffer = async (id) => {
         <div class="offerCard" v-for="offer in offerList" :key="offer.id">
           <div>
             <RouterLink :to="{ name: 'offer', params: { id: offer.id } }">
-              <img :src="offer.attributes.pictures.data[0].attributes.url" alt="" />
+              <img
+                v-if="offer.attributes.pictures.data"
+                :src="offer.attributes.pictures.data[0].attributes.url"
+                alt=""
+              />
+              <img
+                v-else
+                src="../assets/img/depositphotos_247872612-stock-illustration-no-image-available-icon-vector.jpg"
+              />
               <h3>{{ offer.attributes.title }}</h3>
             </RouterLink>
           </div>

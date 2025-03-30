@@ -47,6 +47,7 @@ onBeforeMount(async () => {
 
 const offerInfo = ref('')
 const offerPrice = ref(0)
+const offerPicture = ref(null)
 
 onMounted(async () => {
   try {
@@ -55,6 +56,9 @@ onMounted(async () => {
     )
     offerInfo.value = data.data.attributes
     offerPrice.value = parseFloat(offerInfo.value.price).toFixed(2)
+    if (offerInfo.value.pictures.data) {
+      offerPicture.value = offerInfo.value.pictures.data[0].attributes.url
+    }
   } catch (error) {
     console.log(error)
   }
@@ -131,10 +135,10 @@ const handlePayment = async () => {
         <section class="articleSection">
           <div class="infoZone">
             <div>
+              <img v-if="offerPicture" :src="offerPicture" alt="" />
               <img
-                v-if="offerInfo.pictures"
-                :src="offerInfo.pictures.data[0].attributes.url"
-                alt=""
+                v-else
+                src="../assets/img/depositphotos_247872612-stock-illustration-no-image-available-icon-vector.jpg"
               />
               <h3>{{ offerInfo.title }}</h3>
             </div>
@@ -242,10 +246,10 @@ const handlePayment = async () => {
           <section class="articleSection">
             <div class="infoZone">
               <div>
+                <img v-if="offerPicture" :src="offerPicture" alt="" />
                 <img
-                  v-if="offerInfo.pictures"
-                  :src="offerInfo.pictures.data[0].attributes.url"
-                  alt=""
+                  v-else
+                  src="../assets/img/depositphotos_247872612-stock-illustration-no-image-available-icon-vector.jpg"
                 />
                 <h3>{{ offerInfo.title }}</h3>
               </div>
@@ -382,7 +386,9 @@ span {
   gap: 10px;
 }
 .infoZone > div:first-of-type > h3 {
-  width: 130px;
+  width: 110px;
+
+  word-wrap: break-word;
 }
 /* --- */
 .deliveryZone {
@@ -443,7 +449,7 @@ form > div > div {
     display: none;
   }
   .infoZone > div:first-of-type > h3 {
-    width: 400px;
+    width: 350px;
   }
   .userArea {
     width: 100%;

@@ -49,6 +49,13 @@ const router = createRouter({
       meta: { requireAuth: true },
     },
     {
+      path: '/offeredit/:id',
+      name: 'offeredit',
+      component: () => import('../views/OfferEditView.vue'),
+      props: true,
+      meta: { requireAuth: true },
+    },
+    {
       path: '/payment/:id',
       name: 'payment',
       component: PaymentView,

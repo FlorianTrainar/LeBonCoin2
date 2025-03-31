@@ -1,18 +1,35 @@
 <script setup>
 import axios from 'axios'
-import { ref, inject, computed } from 'vue'
+import { ref, inject, onMounted, computed } from 'vue'
 import { useRouter } from 'vue-router'
 const router = useRouter()
 
 const GlobalStore = inject('GlobalStore')
+const props = defineProps({
+  id: { required: true },
+})
 
 const title = ref('')
 const description = ref('')
 const price = ref(null)
-const pictures = ref(null)
+const pictures = ref([])
 
 const errorMessage = ref('')
 const isSubmitting = ref(false)
+
+onMounted(async () => {
+  try {
+    const { data } = await axios.get(
+      `https://site--backend-leboncoin--p4zjh85jtpgn.code.run/api/offers/${props.id}`,
+    )
+    title.value = data.data.attributes.title
+    description.value = data.data.attributes.description
+    price.value = data.data.attributes.price
+    // pictures.value = data.data.attributes
+  } catch (error) {
+    console.log(error)
+  }
+})
 
 const handleSubmit = async () => {
   isSubmitting.value = true
@@ -39,8 +56,8 @@ const handleSubmit = async () => {
     formData.append('data', stringifiedInfos)
 
     try {
-      const response = await axios.post(
-        'https://site--backend-leboncoin--p4zjh85jtpgn.code.run/api/offers',
+      const response = await axios.put(
+        `https://site--backend-leboncoin--p4zjh85jtpgn.code.run/api/offers/${props.id}`,
         formData,
         {
           headers: {
@@ -87,7 +104,6 @@ const buttonText = computed(() => {
     return 'Déposer mon annonce'
   }
 })
-
 const clearErrorMessage = () => {
   if (errorMessage.value) {
     errorMessage.value = ''
@@ -96,9 +112,8 @@ const clearErrorMessage = () => {
 </script>
 <template>
   <main>
-    <!-- token={{ GlobalStore }} -->
     <div class="wrapper">
-      <h2>Déposer une annonce</h2>
+      <h2>Modifier votre annonce</h2>
       <form @submit.prevent="handleSubmit">
         <div>
           <label for="title">Titre de l'annonce</label>
@@ -159,6 +174,7 @@ const clearErrorMessage = () => {
 
         <button :disabled="isSubmitting">{{ buttonText }}</button>
       </form>
+      <!-- test={{ props.id }} picture= {{ pictures }} price={{ price }} -->
       <!-- <p>Title : {{ title }} /// Description : {{ description }} // Price :{{ price }}</p>
       <p>Token : {{ GlobalStore.userInfo.value.token }}</p>
       <p>User : {{ GlobalStore.userId.value }}</p>

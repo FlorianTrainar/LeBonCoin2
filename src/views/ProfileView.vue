@@ -43,24 +43,26 @@ onMounted(async () => {
   }
 })
 
-const deleteOffer = async (id) => {
-  try {
-    const { data } = await axios.delete(
-      `https://site--backend-leboncoin--p4zjh85jtpgn.code.run/api/offers/${id}`,
-      {
-        headers: {
-          Authorization: 'Bearer ' + GlobalStore.userInfo.value.token,
+const deleteOffer = async (id, title) => {
+  if (confirm(`Êtes-vous sûr de vouloir supprimer l'offre suivante : "${title}"`)) {
+    try {
+      const { data } = await axios.delete(
+        `https://site--backend-leboncoin--p4zjh85jtpgn.code.run/api/offers/${id}`,
+        {
+          headers: {
+            Authorization: 'Bearer ' + GlobalStore.userInfo.value.token,
 
-          'Content-Type': 'multipart/form-data',
+            'Content-Type': 'multipart/form-data',
+          },
         },
-      },
-    )
-    console.log(data)
-    alert(`L'offre a bien été supprimée`)
+      )
+      console.log(data)
+      alert(`L'offre "${title}" a bien été supprimée`)
 
-    router.go()
-  } catch (error) {
-    console.log('Delete= ' + error)
+      router.go()
+    } catch (error) {
+      console.log('Delete= ' + error)
+    }
   }
 }
 </script>
@@ -98,12 +100,17 @@ const deleteOffer = async (id) => {
             </RouterLink>
           </div>
           <div>
-            <p>{{ GlobalStore.correctedPrice(offer.attributes.price.toString()) }} €</p>
+            <p>{{ GlobalStore.correctedPrice(offer.attributes.price.toFixed(2).toString()) }} €</p>
           </div>
           <div class="icons">
-            <font-awesome-icon :icon="['fas', 'edit']" @click="updateOffer(offer.id)" />
+            <RouterLink :to="{ name: 'offeredit', params: { id: offer.id } }">
+              <font-awesome-icon :icon="['fas', 'edit']" />
+            </RouterLink>
 
-            <font-awesome-icon :icon="['fas', 'trash']" @click="deleteOffer(offer.id)" />
+            <font-awesome-icon
+              :icon="['fas', 'trash']"
+              @click="deleteOffer(offer.id, offer.attributes.title)"
+            />
           </div>
         </div>
       </section>
@@ -116,7 +123,7 @@ const deleteOffer = async (id) => {
           <AddButton />
         </div>
       </div>
-
+      <div id="deleteForm"></div>
       <!-- test= {{ GlobalStore.userInfo.value.token }} test={{ userInfos }} -->
     </div>
   </main>
@@ -130,6 +137,7 @@ section {
   display: flex;
   flex-direction: column;
   gap: 10px;
+  /* position: relative; */
 }
 
 /* --- */
@@ -166,7 +174,6 @@ section:first-child {
 /* --- */
 
 .offerCard {
-  padding: 5px;
   box-shadow: 0 0 5px grey;
   border-radius: 6px;
   display: flex;
@@ -189,7 +196,7 @@ section:first-child {
 .offerCard img {
   width: 100px;
   height: 100px;
-  object-fit: cover;
+  object-fit: contain;
   /* border: solid 1px grey; */
 }
 .offerCard p {
@@ -197,10 +204,25 @@ section:first-child {
   font-weight: bold;
   font-size: 18px;
 }
+
+.icons {
+  display: flex;
+  flex-direction: column;
+  height: 75px;
+  justify-content: space-between;
+}
+
 .icons svg {
   color: var(--orange-);
   margin: 0 5px;
   cursor: pointer;
+  font-size: 18px;
+}
+
+/* --- */
+#deleteForm {
+  position: absolute;
+  top: 100px;
 }
 
 /* ---  */
@@ -230,13 +252,14 @@ section:first-child {
   h3 {
     font-size: 15px;
   }
+  .offerCard {
+    padding: 2px;
+  }
   .offerCard p {
     font-size: 16px;
   }
-  .icons {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
+  .offerCard div:first-child {
+    width: 60%;
   }
 }
 </style>

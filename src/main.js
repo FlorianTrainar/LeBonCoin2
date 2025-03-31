@@ -66,7 +66,7 @@ const correctedPrice = (price) => {
     if (price[i] === '.') {
       newPrice = ', ' + newPrice
     } else {
-      if (newPrice.length === 3 || newPrice.length === 7) {
+      if (newPrice.length === 11 || newPrice.length === 7) {
         newPrice = price[i] + ' ' + newPrice
       } else {
         newPrice = price[i] + newPrice
